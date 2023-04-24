@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  # image project
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/usr/share/nginx
+    networks:
+      - laravel
+
+  # db mysql
+  mysql:
+    image: mysql
+    command: --innodb-use-native-aio=0
+    environment:
+      MYSQL_DATABASE: sigpraca
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./.docker/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - laravel
+
+networks:
+  laravel:
+    driver: bridge
