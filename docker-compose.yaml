@@ -6,10 +6,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - "8000:80"
     volumes:
       - ./:/usr/share/nginx
+      - ./docker/nginx/:/etc/nginx/config.d/
     networks:
       - laravel
 
@@ -20,10 +22,16 @@ services:
     environment:
       MYSQL_DATABASE: sigpraca
       MYSQL_ROOT_PASSWORD: password
-    volumes:
-      - ./.docker/mysql:/var/lib/mysql
     ports:
       - "3306:3306"
+    volumes:
+      - ./.docker/mysql/:/var/lib/mysql
+    networks:
+      - laravel
+
+  # redis
+  redis:
+    image: redis:latest
     networks:
       - laravel
 
