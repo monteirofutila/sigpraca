@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('worker_id')->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->foreignUuid('category_id')->constrained()
+        Schema::create('transactions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignUuid('user_id')->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->text('description')->nullable();
-            $table->decimal('balance', 10, 2)->default(0);
+            $table->decimal('value', 10, 2);
+            $table->decimal('previous_balance', 10, 2);
+            $table->decimal('current_balance', 10, 2);
+            $table->morphs('model');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('transactions');
     }
 };

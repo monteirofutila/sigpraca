@@ -14,11 +14,17 @@ return new class extends Migration
         Schema::create('workers', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->enum('gender', ['F', 'M']);
-            $table->date('date_birth');
-            $table->char('bi_number', 14)->unique();
-            $table->enum('marital_status', ['Solteiro', 'Casado', 'Viuvo', 'Divorciado']);
+            $table->string('email')->unique()->nullable();
             $table->string('photo')->nullable();
+            $table->string('phone_mobile')->nullable();
+            $table->string('phone_other')->nullable();
+            $table->string('address_country')->nullable();
+            $table->string('address_state')->nullable();
+            $table->string('address_city')->nullable();
+            $table->string('address_street')->nullable();
+            $table->date('date_birth');
+            $table->enum('gender', ['F', 'M']);
+            $table->char('bi', 14)->unique();
             $table->timestamps();
             $table->softDeletes();
         });
