@@ -28,5 +28,10 @@ RUN pecl install -o -f redis \
 # Set working directory
 WORKDIR /var/www
 
+COPY . /var/www/
+
+RUN cp .env.example .env
+RUN php artisan key:generate
+
 # Copy custom configurations PHP
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini

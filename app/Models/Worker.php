@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Worker extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids, SoftDeletes;
 
     protected $table = 'workers';
 
@@ -25,4 +29,14 @@ class Worker extends Model
         'gender',
         'bi',
     ];
+
+    public function account(): HasOne
+    {
+        return $this->hasOne(Account::class);
+    }
+
+    public function market(): BelongsTo
+    {
+        return $this->belongsTo(Worker::class);
+    }
 }

@@ -22,7 +22,18 @@ class UpdateWorkerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'photo' => 'nullable|file|mimes:png,jpg',
+            'phone_mobile' => 'nullable|string',
+            'phone_other' => 'nullable|string',
+            'address_country' => 'nullable|string',
+            'address_state' => 'nullable|string',
+            'address_city' => 'nullable|string',
+            'address_street' => 'nullable|string',
+            'date_birth' => 'required|date',
+            'gender' => 'required|in:M,F',
+            'bi' => 'required|string|size:14',
         ];
     }
 }
