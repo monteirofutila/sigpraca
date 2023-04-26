@@ -11,7 +11,7 @@ class StoreAccountRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'worker_id' => 'required|exists:workers,id',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
         ];
     }
 }

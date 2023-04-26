@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAccountRequest extends FormRequest
+class StoreMarketRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,9 +22,9 @@ class UpdateAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'worker_id' => 'required|exists:workers,id',
-            'category_id' => 'required|exists:categories,id',
-            'description' => 'nullable|string',
+            'name' => 'required|string',
+            'address' => 'nullable|string',
+            'description' => 'nullable|string'
         ];
     }
 }
