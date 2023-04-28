@@ -5,7 +5,7 @@ namespace App\Services;
 use App\DTO\Workers\CreateWorkerDTO;
 use App\DTO\Workers\UpdateWorkerDTO;
 use App\Repositories\WorkerRepository;
-use Ramsey\Collection\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 class WorkerService
 {
