@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use App\DTO\Users\CreateUserDTO;
-use App\DTO\Users\UpdateUserDTO;
-use App\Repositories\UserRepository;
+use App\DTO\Workers\CreateWorkerDTO;
+use App\DTO\Workers\UpdateWorkerDTO;
+use App\Repositories\WorkerRepository;
 use Ramsey\Collection\Collection;
 
-class UserService
+class WorkerService
 {
     public function __construct(
-        protected UserRepository $repository,
+        protected WorkerRepository $repository,
     ) {
     }
 
@@ -24,12 +24,12 @@ class UserService
         return $this->repository->getAll();
     }
 
-    public function new(CreateUserDTO $dto): ?object
+    public function new(CreateWorkerDTO $dto): ?object
     {
         return $this->repository->new($dto->toArray());
     }
 
-    public function update(UpdateUserDTO $dto, string $id): ?object
+    public function update(UpdateWorkerDTO $dto, string $id): ?object
     {
         return $this->repository->update($id, $dto->toArray());
     }

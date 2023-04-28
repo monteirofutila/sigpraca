@@ -1,10 +1,10 @@
 <?php
 
-namespace App\DTO\Users;
+namespace App\DTO\Workers;
 
-use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\StoreWorkerRequest;
 
-class CreateUserDTO
+class UpdateWorkerDTO
 {
     public function __construct(
         public string $user_name,
@@ -32,7 +32,7 @@ class CreateUserDTO
         return array_combine($keys, $properties);
     }
 
-    public static function makeFromRequest(StoreUserRequest $request): self
+    public static function makeFromRequest(StoreWorkerRequest $request): self
     {
         return new self(
             $request->user_name,
