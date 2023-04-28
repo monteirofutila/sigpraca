@@ -5,7 +5,7 @@ namespace App\Services;
 use App\DTO\Users\CreateUserDTO;
 use App\DTO\Users\UpdateUserDTO;
 use App\Repositories\UserRepository;
-use Ramsey\Collection\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserService
 {

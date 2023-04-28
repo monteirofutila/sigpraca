@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 use App\Interfaces\RepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Collection\Collection;
 
 abstract class AbstractRepository implements RepositoryInterface
 {
