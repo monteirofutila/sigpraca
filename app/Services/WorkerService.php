@@ -36,6 +36,6 @@ class WorkerService
 
     public function delete(string $id): bool
     {
-        $this->repository->delete($id);
+        return $this->repository->delete($id);
     }
 }
