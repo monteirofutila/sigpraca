@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\Workers\CreateWorkerDTO;
+use App\DTO\Workers\UpdateWorkerDTO;
 use App\Http\Requests\StoreWorkerRequest;
 use App\Http\Requests\UpdateWorkerRequest;
 use App\Models\Worker;
@@ -19,9 +21,9 @@ class WorkerController extends Controller
         return response()->json($response);
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(StoreWorkerRequest $request)
     {
-        $dto = CreateUserDTO::makeFromRequest($request);
+        $dto = CreateWorkerDTO::makeFromRequest($request);
         $response = $this->service->new($dto);
         return response()->json($response);
     }
@@ -32,7 +34,7 @@ class WorkerController extends Controller
         return response()->json($response);
     }
 
-    public function update(string $id, UpdateUserRequest $request)
+    public function update(string $id, StoreWorkerRequest $request)
     {
         $dto = UpdateUserDTO::makeFromRequest($request);
         $response= $this->service->update($dto, $id);

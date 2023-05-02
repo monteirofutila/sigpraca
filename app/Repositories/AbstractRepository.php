@@ -40,7 +40,7 @@ abstract class AbstractRepository implements RepositoryInterface
         return null;
     }
 
-    public function delete(string $id):bool
+    public function delete(string $id): bool
     {
         $model = $this->model->find($id);
 

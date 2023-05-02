@@ -30,7 +30,7 @@ class UserService
     }
 
     public function update(UpdateUserDTO $dto, string $id): ?object
-    {
+    {     dd("ok");
         return $this->repository->update($id, $dto->toArray());
     }
 

@@ -33,7 +33,7 @@ class StoreUserRequest extends FormRequest
             'address_state' => 'nullable|string',
             'address_city' => 'nullable|string',
             'address_street' => 'nullable|string',
-            'date_birth' => 'required|date',
+            'date_birth' => 'required|date|date_format:Y-m-d',
             'gender' => 'required|in:M,F',
             'bi' => 'required|string|size:14',
         ];
