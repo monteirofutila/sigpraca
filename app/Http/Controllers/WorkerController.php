@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\DTO\Workers\CreateWorkerDTO;
 use App\DTO\Workers\UpdateWorkerDTO;
 use App\Http\Requests\StoreWorkerRequest;
 use App\Http\Requests\UpdateWorkerRequest;
-use App\Models\Worker;
 use App\Services\WorkerService;
 
 class WorkerController extends Controller

@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMarketRequest;
 use App\Http\Requests\UpdateMarketRequest;
-use App\Models\Market;
-
+use App\Services\MarketService;
 class MarketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(
+        protected MarketService $service
+    ){
+    }
     public function index()
     {
-        //
+        $response= $this->service->getAll();
+        return response()->json($response);
     }
 
     /**
