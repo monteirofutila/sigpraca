@@ -2,21 +2,16 @@
 
 namespace App\Services;
 
-use App\DTO\Workers\CreateWorkerDTO;
-use App\DTO\Workers\UpdateWorkerDTO;
-use App\Repositories\WorkerRepository;
+use App\DTO\Category\CreateMarketDTO;
+use App\DTO\Workers\UpdateMarketDTO;
+use App\Repositories\MarketRepository;
 use Illuminate\Database\Eloquent\Collection;
 
-class WorkerService
+class MarketService
 {
     public function __construct(
-        protected WorkerRepository $repository,
+        protected MarketRepository $repository,
     ) {
-    }
-
-    public function findById(string $id): ?object
-    {
-        return $this->repository->findById($id);
     }
 
     public function getAll(): Collection

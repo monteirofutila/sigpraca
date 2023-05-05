@@ -33,8 +33,8 @@ class UpdateUserRequest extends FormRequest
             'address_country' => 'nullable|string',
             'address_state' => 'nullable|string',
             'address_city' => 'nullable|string',
-            'address_street' => 'nullable|string',
-            'date_birth' => 'required|date',
+            'address._street' => 'nullable|string',
+            'date_birth' => 'required|date|date_format:Y-m-d',
             'gender' => 'required|in:M,F',
             'bi' => 'required|string|size:14',
         ];

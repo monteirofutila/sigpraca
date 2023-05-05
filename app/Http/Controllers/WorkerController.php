@@ -1,66 +1,47 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\DTO\Workers\CreateWorkerDTO;
+use App\DTO\Workers\UpdateWorkerDTO;
 use App\Http\Requests\StoreWorkerRequest;
 use App\Http\Requests\UpdateWorkerRequest;
-use App\Models\Worker;
+use App\Services\WorkerService;
 
 class WorkerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(
+        protected WorkerService $service
+    ){
+    }
     public function index()
     {
-        //
+        $response= $this->service->getAll();
+        return response()->json($response);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreWorkerRequest $request)
     {
-        //
+        $dto = CreateWorkerDTO::makeFromRequest($request);
+        $response = $this->service->new($dto);
+        return response()->json($response);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Worker $worker)
+    public function show(string $id)
     {
-        //
+        $response= $this->service->findById($id);
+        return response()->json($response);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Worker $worker)
+    public function update(string $id, StoreWorkerRequest $request)
     {
-        //
+        $dto = UpdateUserDTO::makeFromRequest($request);
+        $response= $this->service->update($dto, $id);
+        return response()->json($response);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateWorkerRequest $request, Worker $worker)
+    public function destroy(string $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Worker $worker)
-    {
-        //
+        $response= $this->service->delete($id);
+        return response()->json($response);
     }
 }

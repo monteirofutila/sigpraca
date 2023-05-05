@@ -2,21 +2,16 @@
 
 namespace App\Services;
 
-use App\DTO\Workers\CreateWorkerDTO;
-use App\DTO\Workers\UpdateWorkerDTO;
-use App\Repositories\WorkerRepository;
+use App\DTO\Category\CreateCategoryDTO;
+use App\DTO\Workers\UpdateCategoryDTO;
+use App\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\Collection;
 
-class WorkerService
+class CategoryService
 {
     public function __construct(
-        protected WorkerRepository $repository,
+        protected CategoryRepository $repository,
     ) {
-    }
-
-    public function findById(string $id): ?object
-    {
-        return $this->repository->findById($id);
     }
 
     public function getAll(): Collection

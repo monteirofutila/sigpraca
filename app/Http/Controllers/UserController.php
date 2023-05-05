@@ -18,29 +18,39 @@ class UserController extends Controller
 
     public function index()
     {
-        return $this->service->getAll();
+        $response= $this->service->getAll();
+        return response()->json($response);
     }
 
     public function store(StoreUserRequest $request)
-    {   
-        $dto = CreateUserDTO::makeFromRequest($request); 
-        return $this->service->new($dto);
+    {
+        $dto = CreateUserDTO::makeFromRequest($request);
+        $response = $this->service->new($dto);
+        return response()->json($response);
     }
 
     public function show(string $id)
     {
-        return $this->service->findById($id);
+        $response= $this->service->findById($id);
+        return response()->json($response);
     }
 
     public function update(string $id, UpdateUserRequest $request)
     {
-        $dto = UpdateUserDTO::makeFromRequest($request); 
-        return $this->service->update($dto, $id);
+        $dto = UpdateUserDTO::makeFromRequest($request);
+        $response= $this->service->update($dto, $id);
+        return response()->json($response);
     }
 
     public function destroy(string $id)
     {
-        return $this->service->delete($id);
+        $data= $this->service->delete($id);
+
+        if(!$data){
+            return response()->json(['message' => 'usuário não existe']);
+        }
+
+        return response()->json(['message' => 'usuário eliminado com sucesso...']);
     }
 }
 
