@@ -1,6 +1,7 @@
 <?php
 
 namespace App\DTO\Accounts;
+
 use App\Http\Requests\StoreAccountRequest;
 
 
@@ -17,7 +18,7 @@ class AccountDTO
     public function toArray(): array
     {
         $properties = get_object_vars($this);
-        $keys = array_map(fn($property) => str_replace('_', '', $property), array_keys($properties));
+        $keys = array_map(fn($property) => $property, array_keys($properties));
         return array_combine($keys, $properties);
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use App\Models\Market;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,14 +15,14 @@ class MarketSeeder extends Seeder
     {
         $dados = [
             [
-				"name" => "KIkolo",
-				"address" => "Luanda, Cacuaco",
-				"description" => "Mercado do KIkolo",
-			],
+                "name" => "KIKOLO",
+                "address" => "Angola, Luanda, Cacuaco",
+                "description" => "Mercado do Kikolo",
+            ],
+        ];
 
-		];
-        foreach ($dados as $key => $value){
-        	Market::create($value);
+        foreach ($dados as $value) {
+            Market::create($value);
         }
     }
 }

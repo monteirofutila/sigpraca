@@ -12,4 +12,9 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         parent::__construct($category);
     }
+
+    public function getFirst(): ?object
+    {
+        return $this->model->first();
+    }
 }

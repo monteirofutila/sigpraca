@@ -2,16 +2,13 @@
 
 namespace App\DTO\Workers;
 
-use App\Http\Requests\StoreWorkerRequest;
+use App\Http\Requests\UpdateWorkerRequest;
 
 class UpdateWorkerDTO
 {
     public function __construct(
-        public string $user_name,
-        public string $first_name,
-        public string $last_name,
+        public string $name,
         public string $email,
-        public string $password,
         public string $photo,
         public string $phone_mobile,
         public string $phone_other,
@@ -28,18 +25,15 @@ class UpdateWorkerDTO
     public function toArray(): array
     {
         $properties = get_object_vars($this);
-        $keys = array_map(fn($property) => $property , array_keys($properties));
+        $keys = array_map(fn($property) => $property, array_keys($properties));
         return array_combine($keys, $properties);
     }
 
-    public static function makeFromRequest(StoreWorkerRequest $request): self
+    public static function makeFromRequest(UpdateWorkerRequest $request): self
     {
         return new self(
-            $request->user_name,
-            $request->first_name,
-            $request->last_name,
+            $request->name,
             $request->email,
-            $request->password,
             $request->photo,
             $request->phone_mobile,
             $request->phone_other,

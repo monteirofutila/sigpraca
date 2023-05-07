@@ -12,4 +12,9 @@ class MarketRepository extends AbstractRepository implements MarketRepositoryInt
     {
         parent::__construct($market);
     }
+
+    public function getFirst(): ?object
+    {
+        return $this->model->first();
+    }
 }

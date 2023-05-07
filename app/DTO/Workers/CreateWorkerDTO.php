@@ -9,7 +9,7 @@ class CreateWorkerDTO
     public function __construct(
         public string $name,
         public string $email,
-        //public string $photo,
+        public string $photo,
         public string $phone_mobile,
         public string $phone_other,
         public string $address_country,
@@ -34,7 +34,7 @@ class CreateWorkerDTO
         return new self(
             $request->name,
             $request->email,
-            //$request->photo,
+            $request->photo,
             $request->phone_mobile,
             $request->phone_other,
             $request->address_country,

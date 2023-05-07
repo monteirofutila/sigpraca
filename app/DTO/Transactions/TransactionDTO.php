@@ -1,6 +1,7 @@
 <?php
 
 namespace App\DTO\Transactions;
+
 use App\Http\Requests\StoreTransactionRequest;
 
 
@@ -18,7 +19,7 @@ class TransactionDTO
     public function toArray(): array
     {
         $properties = get_object_vars($this);
-        $keys = array_map(fn($property) => str_replace('_', '', $property), array_keys($properties));
+        $keys = array_map(fn($property) => $property, array_keys($properties));
         return array_combine($keys, $properties);
     }
 

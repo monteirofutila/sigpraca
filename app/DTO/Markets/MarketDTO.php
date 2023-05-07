@@ -1,7 +1,8 @@
 <?php
 
 namespace App\DTO\Markets;
-use App\Http\Requests\StoreMarketRequest;
+
+use App\Http\Requests\UpdateMarketRequest;
 
 
 class MarketDTO
@@ -9,18 +10,18 @@ class MarketDTO
     public function __construct(
         public string $name,
         public string $address,
-        public float $description,
+        public string $description,
     ) {
     }
 
     public function toArray(): array
     {
         $properties = get_object_vars($this);
-        $keys = array_map(fn($property) => str_replace('_', '', $property), array_keys($properties));
+        $keys = array_map(fn($property) => $property, array_keys($properties));
         return array_combine($keys, $properties);
     }
 
-    public static function makeFromRequest(StoreMarketRequest $request): self
+    public static function makeFromRequest(UpdateMarketRequest $request): self
     {
         return new self(
             $request->name,

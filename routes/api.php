@@ -13,14 +13,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\MarketController;
-require __DIR__ . '/routes/UserRoute.php';
-require __DIR__ . '/routes/WorkerRoute.php';
 
-Route::resource('categorys', CategoryController::class);
-
-Route::resource('market', MarketController::class);
-/* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-}); */
+require base_path('routes/v1/auth.php');
+require base_path('routes/v1/users.php');
+require base_path('routes/v1/workers.php');
+require base_path('routes/v1/transactions.php');
+require base_path('routes/v1/markets.php');
