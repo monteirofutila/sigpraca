@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\DTO\Users\CreateUserDTO;
-use App\DTO\Users\UpdateUserDTO;
+use App\DTO\Users\UserDTO;
 use App\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -24,12 +23,12 @@ class UserService
         return $this->repository->getAll();
     }
 
-    public function new(CreateUserDTO $dto): ?object
+    public function new(UserDTO $dto): ?object
     {
         return $this->repository->new($dto->toArray());
     }
 
-    public function update(UpdateUserDTO $dto, string $id): ?object
+    public function update(UserDTO $dto, string $id): ?object
     {
         return $this->repository->update($id, $dto->toArray());
     }

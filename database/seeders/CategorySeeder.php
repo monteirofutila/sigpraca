@@ -11,8 +11,8 @@ class CategorySeeder extends Seeder
 {
 	public function __construct(protected CategoryRepository $repository)
 	{
-
 	}
+
 	/**
 	 * Run the database seeds.
 	 */

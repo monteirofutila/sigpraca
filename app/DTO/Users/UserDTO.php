@@ -2,25 +2,25 @@
 
 namespace App\DTO\Users;
 
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UserRequest;
 
-class UpdateUserDTO
+class UserDTO
 {
     public function __construct(
         public string $name,
         public string $user_name,
-        public string $email,
+        public ?string $email,
         public string $password,
-        public string $photo,
-        public string $phone_mobile,
-        public string $phone_other,
-        public string $address_country,
-        public string $address_state,
-        public string $address_city,
-        public string $address_street,
+        public $photo,
+        public ?string $phone_mobile,
+        public ?string $phone_other,
+        public ?string $address_country,
+        public ?string $address_state,
+        public ?string $address_city,
+        public ?string $address_street,
         public $date_birth,
         public string $gender,
-        public string $bi,
+        public ?string $bi,
     ) {
     }
 
@@ -31,8 +31,9 @@ class UpdateUserDTO
         return array_combine($keys, $properties);
     }
 
-    public static function makeFromRequest(UpdateUserRequest $request): self
+    public static function makeFromRequest(UserRequest $request): self
     {
+
         return new self(
             $request->name,
             $request->user_name,

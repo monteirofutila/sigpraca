@@ -8,17 +8,17 @@ class CreateWorkerDTO
 {
     public function __construct(
         public string $name,
-        public string $email,
-        public string $photo,
-        public string $phone_mobile,
-        public string $phone_other,
-        public string $address_country,
-        public string $address_state,
-        public string $address_city,
-        public string $address_street,
+        public ?string $email,
+        public $photo,
+        public ?string $phone_mobile,
+        public ?string $phone_other,
+        public ?string $address_country,
+        public ?string $address_state,
+        public ?string $address_city,
+        public ?string $address_street,
         public $date_birth,
         public string $gender,
-        public string $bi,
+        public ?string $bi,
     ) {
     }
 

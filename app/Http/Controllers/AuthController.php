@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\Accounts\LoginDTO;
+use App\DTO\Auth\LoginDTO;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserResource;
 use App\Services\AuthService;
@@ -38,6 +38,6 @@ class AuthController extends Controller
         $this->service->logout($request);
         return response()->json([
             'message' => 'Logout successfully...'
-        ], 204);
+        ], 200);
     }
 }

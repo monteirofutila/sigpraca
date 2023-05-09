@@ -3,11 +3,16 @@
 namespace Database\Seeders;
 
 use App\Models\Market;
+use App\Repositories\MarketRepository;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class MarketSeeder extends Seeder
 {
+    public function __construct(protected MarketRepository $repository)
+    {
+    }
+
     /**
      * Run the database seeds.
      */
@@ -22,7 +27,7 @@ class MarketSeeder extends Seeder
         ];
 
         foreach ($dados as $value) {
-            Market::create($value);
+            $this->repository->new($value);
         }
     }
 }

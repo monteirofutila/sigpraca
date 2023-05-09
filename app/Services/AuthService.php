@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\DTO\Accounts\LoginDTO;
+use App\DTO\Auth\LoginDTO;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
