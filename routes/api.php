@@ -20,3 +20,4 @@ require base_path('routes/v1/workers.php');
 require base_path('routes/v1/transactions.php');
 require base_path('routes/v1/markets.php');
 require base_path('routes/v1/accounts.php');
+require base_path('routes/v1/permissions.php');

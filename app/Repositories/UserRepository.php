@@ -22,4 +22,29 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     {
         return $this->model->where('user_name', $userName)->first();
     }
+
+    public function getRoles(string $userID): ?object
+    {
+        $model = $this->model->find($userID);
+
+        if ($model) {
+            return $model->getRoleNames();
+        }
+
+        return null;
+    }
+
+    public function getPermissions(string $userID): ?object
+    {
+
+        $model = $this->model->find($userID);
+
+        if ($model) {
+            return $model->getAllPermissions();
+        }
+
+        return null;
+    }
+
+
 }

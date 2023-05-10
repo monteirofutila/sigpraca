@@ -65,4 +65,18 @@ class UserService
         throw_if(!$data, new ResourceNotFoundException);
         return $data;
     }
+
+    public function getRoles(string $userID): ?object
+    {
+        $data = $this->repository->getRoles($userID);
+        throw_if(!$data, new ResourceNotFoundException);
+        return $data;
+    }
+
+    public function getPermissions(string $userID): ?object
+    {
+        $data = $this->repository->getPermissions($userID);
+        throw_if(!$data, new ResourceNotFoundException);
+        return $data;
+    }
 }
