@@ -18,27 +18,38 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $dados = [
-            [
-                'name' => 'Administrador',
-                'user_name' => 'admin',
-                'email' => 'admin@app.com',
-                'password' => Hash::make('password'),
-                'photo' => fake()->imageUrl(),
-                'phone_mobile' => fake()->phoneNumber(),
-                'phone_other' => null,
-                'address_country' => fake()->country(),
-                'address_state' => null,
-                'address_city' => null,
-                'address_street' => fake()->streetAddress(),
-                'date_birth' => '2020-03-02',
-                'gender' => 'M',
-                'bi' => '12345678901234',
-            ],
-        ];
 
-        foreach ($dados as $value) {
-            $this->repository->new($value);
-        }
+        $user = $this->repository->new([
+            'name' => 'Administrador',
+            'user_name' => 'admin',
+            'email' => 'admin@app.com',
+            'password' => Hash::make('password'),
+            'photo' => fake()->imageUrl(),
+            'gender' => 'M',
+        ]);
+        $user->assignRole('Administrador');
+
+        $user = $this->repository->new([
+            'name' => 'Operador de caixa',
+            'user_name' => 'caixa',
+            'email' => 'caixa@app.com',
+            'password' => Hash::make('password'),
+            'photo' => fake()->imageUrl(),
+            'gender' => 'M',
+        ]);
+        $user->assignRole('Caixa');
+
+        $user = $this->repository->new([
+            'name' => 'Fiscal',
+            'user_name' => 'fiscal',
+            'email' => 'fiscal@app.com',
+            'password' => Hash::make('password'),
+            'photo' => fake()->imageUrl(),
+            'address_street' => fake()->streetAddress(),
+            'date_birth' => '2020-03-02',
+            'gender' => 'M',
+        ]);
+        $user->assignRole('Fiscal');
+
     }
 }
