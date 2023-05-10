@@ -20,7 +20,7 @@ class WorkerResource extends JsonResource
             'attributes' => [
                 'name' => $this->name,
                 'email' => $this->email,
-                'photo' => asset($this->photo),
+                'photo' => asset('storage/' . $this->photo),
                 'phone_mobile' => $this->phone_mobile,
                 'phone_other' => $this->phone_other,
                 'address' => [
@@ -33,9 +33,9 @@ class WorkerResource extends JsonResource
                 'gender' => $this->gender,
                 'bi' => $this->bi,
             ],
-            'included' => [
-                'account' => new AccountResource($this->account),
-            ],
+            /* 'included' => [
+            'account' => new AccountResource($this->account),
+            ], */
         ];
     }
 }

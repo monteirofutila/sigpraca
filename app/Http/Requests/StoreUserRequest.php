@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateWorkerRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,9 @@ class UpdateWorkerRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'nullable|email|unique:workers,email',
+            'user_name' => 'required|string|unique:users,user_name',
+            'email' => 'nullable|email|unique:users,email',
+            'password' => 'required|confirmed|min:8',
             'photo' => 'nullable|file|mimes:png,jpg',
             'phone_mobile' => 'nullable|string',
             'phone_other' => 'nullable|string',
@@ -31,9 +33,9 @@ class UpdateWorkerRequest extends FormRequest
             'address_state' => 'nullable|string',
             'address_city' => 'nullable|string',
             'address_street' => 'nullable|string',
-            'date_birth' => 'required|date|date_format:Y-m-d',
+            'date_birth' => 'nullable|date|date_format:Y-m-d',
             'gender' => 'required|in:M,F',
-            'bi' => 'required|string|size:14|unique:workers,bi',
+            'bi' => 'nullable|string|size:14|unique:users,bi',
         ];
     }
 }

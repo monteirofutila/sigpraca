@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->string('address_street')->nullable();
             $table->date('date_birth');
             $table->enum('gender', ['F', 'M']);
-            $table->char('bi', 14)->unique();
+            $table->char('bi', 14)->unique()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

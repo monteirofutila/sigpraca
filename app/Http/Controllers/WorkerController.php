@@ -2,53 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\Accounts\AccountDTO;
 use App\DTO\Workers\CreateWorkerDTO;
 use App\DTO\Workers\UpdateWorkerDTO;
 use App\Http\Requests\StoreWorkerRequest;
 use App\Http\Requests\UpdateWorkerRequest;
 use App\Http\Resources\WorkerResource;
+use App\Services\AccountService;
+use App\Services\CategoryService;
 use App\Services\WorkerService;
 
 class WorkerController extends Controller
 {
     public function __construct(
-        protected WorkerService $service
+        protected WorkerService $workerService,
+        protected AccountService $accountService,
+        protected CategoryService $categoryService
     ) {
     }
     public function index()
     {
-        $response = $this->service->getAll();
+        $response = $this->workerService->getAll();
         return WorkerResource::collection($response);
     }
 
     public function store(StoreWorkerRequest $request)
     {
-        $dto = CreateWorkerDTO::makeFromRequest($request);
-        $response = $this->service->new($dto);
-        return new WorkerResource($response);
+        $workerDTO = CreateWorkerDTO::makeFromRequest($request);
+
+        $worker = $this->workerService->new($workerDTO);
+        $category = $this->categoryService->getFirst();
+
+        //criar conta para o trabalhador cadastrado
+        $accountDTO = new AccountDTO(
+            $worker->id,
+            $category->id,
+            null,
+            0
+        );
+
+        $this->accountService->create($accountDTO);
+
+        return new WorkerResource($worker);
     }
 
-    public function show(string $id)
+    public function show(string $workerID)
     {
-        $response = $this->service->findById($id);
+        $response = $this->workerService->findById($workerID);
         return new WorkerResource($response);
     }
 
-    public function update(string $id, UpdateWorkerRequest $request)
+    public function update(string $workerID, UpdateWorkerRequest $request)
     {
         $dto = UpdateWorkerDTO::makeFromRequest($request);
-        $response = $this->service->update($dto, $id);
+        $response = $this->workerService->update($dto, $workerID);
         return new WorkerResource($response);
     }
 
-    public function destroy(string $id)
+    public function destroy(string $workerID)
     {
-        $data = $this->service->delete($id);
-
-        if (!$data) {
-            return response()->json(['message' => 'Trabalhador não existe...'], 404);
-        }
-
-        return response()->json(['message' => 'Trabalhador eliminado com sucesso...'], 204);
+        $this->workerService->delete($workerID);
+        return response()->json([
+            'message' => 'Trabalhador eliminado com sucesso...'
+        ], 200);
     }
 }

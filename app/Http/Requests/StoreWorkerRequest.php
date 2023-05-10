@@ -23,7 +23,7 @@ class StoreWorkerRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'required|email',
+            'email' => 'nullable|email|unique:workers,email',
             'photo' => 'nullable|file|mimes:png,jpg',
             'phone_mobile' => 'nullable|string',
             'phone_other' => 'nullable|string',
@@ -33,7 +33,7 @@ class StoreWorkerRequest extends FormRequest
             'address_street' => 'nullable|string',
             'date_birth' => 'required|date|date_format:Y-m-d',
             'gender' => 'required|in:M,F',
-            'bi' => 'required|string|size:14',
+            'bi' => 'required|string|size:14|unique:workers,bi',
         ];
     }
 }

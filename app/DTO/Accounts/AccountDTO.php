@@ -10,7 +10,7 @@ class AccountDTO
     public function __construct(
         public string $worker_id,
         public string $category_id,
-        public string $description,
+        public ?string $description,
         public float $balance,
     ) {
     }
