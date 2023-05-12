@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PermissionResource;
 use App\Http\Resources\RoleResource;
 use App\Services\PermissionService;
 use App\Services\UserService;
@@ -16,8 +17,9 @@ class PermissionController extends Controller
     }
     public function getAllRoles()
     {
-        $data = $this->permissionService->getAllRoles();
-        return new RoleResource($data);
+        return RoleResource::collection(
+            $this->permissionService->getAllRoles()
+        );
     }
 
     public function getRoles(string $userID)
@@ -27,7 +29,9 @@ class PermissionController extends Controller
 
     public function getPermissions(string $userID)
     {
-        return $this->userService->getPermissions($userID);
+        return PermissionResource::collection(
+            $this->userService->getPermissions($userID)
+        );
     }
 
 }

@@ -16,4 +16,18 @@ class AccountRepository extends AbstractRepository implements AccountRepositoryI
     {
         return $this->model->with('worker', 'category')->where('worker_id', $workerID)->first();
     }
+
+    public function incrementBalance(string $accountID, float $value): ?object
+    {
+        $model = $this->model->find($accountID);
+        $model->increment('balance', $value);
+        return $model;
+    }
+
+    public function decrementBalance(string $accountID, float $value): ?object
+    {
+        $model = $this->model->find($accountID);
+        $model->decrement('balance', $value);
+        return $model;
+    }
 }

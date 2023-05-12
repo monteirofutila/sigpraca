@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Transaction extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
-protected $table = 'transactions';
+    protected $table = 'transactions';
 
     protected $fillable = [
         'user_id',
@@ -20,6 +20,8 @@ protected $table = 'transactions';
         'value',
         'previous_balance',
         'current_balance',
+        'model_id',
+        'model_type',
     ];
 
     public function user(): BelongsTo
@@ -31,5 +33,5 @@ protected $table = 'transactions';
     {
         return $this->morphTo();
     }
-    
+
 }

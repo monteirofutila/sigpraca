@@ -5,11 +5,11 @@ namespace App\DTO\Debits;
 use App\Http\Requests\StoreDebitRequest;
 
 
-class DebitsDTO
+class DebitDTO
 {
     public function __construct(
-        public string $account_id,
-        public string $description,
+        public ?string $account_id,
+        public ?string $description,
         public float $value,
     ) {
     }

@@ -8,8 +8,8 @@ use App\Http\Requests\StoreCreditRequest;
 class CreditDTO
 {
     public function __construct(
-        public string $account_id,
-        public string $description,
+        public ?string $account_id,
+        public ?string $description,
         public float $value,
     ) {
     }
