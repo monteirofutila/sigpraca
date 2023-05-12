@@ -2,16 +2,22 @@
 
 namespace App\Services;
 
+use App\DTO\Accounts\AccountDTO;
 use App\DTO\Workers\CreateWorkerDTO;
 use App\DTO\Workers\UpdateWorkerDTO;
 use App\Exceptions\ResourceNotFoundException;
+use App\Repositories\AccountRepository;
+use App\Repositories\CategoryRepository;
 use App\Repositories\WorkerRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class WorkerService
 {
     public function __construct(
         protected WorkerRepository $repository,
+        protected AccountRepository $accountRepository,
+        protected CategoryRepository $categoryRepository,
     ) {
     }
 
@@ -30,12 +36,35 @@ class WorkerService
 
     public function new(CreateWorkerDTO $dto): ?object
     {
-        if ($dto->photo) {
-            $image_path = uploadPhoto($dto->photo, 'workers');
-            $dto->photo = $image_path;
+        DB::beginTransaction();
+
+        try {
+            if ($dto->photo) {
+                $image_path = uploadPhoto($dto->photo, 'workers');
+                $dto->photo = $image_path;
+            }
+
+            $worker = $this->repository->new($dto->toArray());
+            $category = $this->categoryRepository->getFirst();
+
+            //criar conta para o trabalhador cadastrado
+            $accountDTO = new AccountDTO(
+                $worker->id,
+                $category->id,
+                null,
+                0
+            );
+
+            $this->accountRepository->new($accountDTO->toArray());
+
+            DB::commit();
+
+            return $worker;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
 
-        return $this->repository->new($dto->toArray());
     }
 
     public function update(UpdateWorkerDTO $dto, string $id): ?object
