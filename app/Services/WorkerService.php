@@ -6,6 +6,7 @@ use App\DTO\Accounts\AccountDTO;
 use App\DTO\Workers\CreateWorkerDTO;
 use App\DTO\Workers\UpdateWorkerDTO;
 use App\Exceptions\ResourceNotFoundException;
+use App\Helpers\FunctionHelper;
 use App\Repositories\AccountRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\WorkerRepository;
@@ -40,7 +41,7 @@ class WorkerService
 
         try {
             if ($dto->photo) {
-                $image_path = uploadPhoto($dto->photo, 'workers');
+                $image_path = FunctionHelper::uploadPhoto($dto->photo, 'workers');
                 $dto->photo = $image_path;
             }
 
@@ -72,9 +73,9 @@ class WorkerService
         $worker = $this->repository->findById($id);
 
         if ($dto->photo) {
-            $image_path = uploadPhoto($dto->photo, 'workers');
+            $image_path = FunctionHelper::uploadPhoto($dto->photo, 'workers');
             $dto->photo = $image_path;
-            deletePhoto($worker->photo);
+            FunctionHelper::deletePhoto($worker->photo);
         }
 
         $data = $this->repository->update($id, $dto->toArray());

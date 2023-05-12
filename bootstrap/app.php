@@ -52,6 +52,4 @@ $app->singleton(
 |
 */
 
-require base_path('App/Helpers/functions.php');
-
 return $app;

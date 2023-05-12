@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DTO\Users\CreateUserDTO;
 use App\DTO\Users\UpdateUserDTO;
 use App\Exceptions\ResourceNotFoundException;
+use App\Helpers\FunctionHelper;
 use App\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -33,7 +34,7 @@ class UserService
         $dto->password = bcrypt($dto->password);
 
         if ($dto->photo) {
-            $image_path = uploadPhoto($dto->photo, 'users');
+            $image_path = FunctionHelper::uploadPhoto($dto->photo, 'users');
             $dto->photo = $image_path;
         }
 
@@ -49,9 +50,9 @@ class UserService
         $user = $this->repository->findById($id);
 
         if ($dto->photo) {
-            $image_path = uploadPhoto($dto->photo, 'users');
+            $image_path = FunctionHelper::uploadPhoto($dto->photo, 'users');
             $dto->photo = $image_path;
-            deletePhoto($user->photo);
+            FunctionHelper::deletePhoto($user->photo);
         }
 
         $data = $this->repository->update($id, $dto->toArray());
