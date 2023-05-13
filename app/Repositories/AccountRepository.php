@@ -14,7 +14,7 @@ class AccountRepository extends AbstractRepository implements AccountRepositoryI
 
     public function findByWorker(string $workerID): ?object
     {
-        return $this->model->with('worker', 'category')->where('worker_id', $workerID)->first();
+        return $this->model->with('worker', 'category', 'transactions')->where('worker_id', $workerID)->first();
     }
 
     public function incrementBalance(string $accountID, float $value): ?object

@@ -16,26 +16,21 @@ class WorkerResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => 'workers',
-            'attributes' => [
-                'name' => $this->name,
-                'email' => $this->email,
-                'photo' => asset('storage/' . $this->photo),
-                'phone_mobile' => $this->phone_mobile,
-                'phone_other' => $this->phone_other,
-                'address' => [
-                    'address_country' => $this->address_country,
-                    'address_state' => $this->address_state,
-                    'address_city' => $this->address_city,
-                    'address_street' => $this->address_street,
-                ],
-                'date_birth' => $this->date_birth,
-                'gender' => $this->gender,
-                'bi' => $this->bi,
+            'name' => $this->name,
+            'email' => $this->email,
+            'photo' => asset('storage/' . $this->photo),
+            'phone_mobile' => $this->phone_mobile,
+            'phone_other' => $this->phone_other,
+            'address' => [
+                'address_country' => $this->address_country,
+                'address_state' => $this->address_state,
+                'address_city' => $this->address_city,
+                'address_street' => $this->address_street,
             ],
-            /* 'included' => [
-            'account' => new AccountResource($this->account),
-            ], */
+            'date_birth' => $this->date_birth,
+            'gender' => $this->gender,
+            'bi' => $this->bi,
+            'account' => new AccountResource($this->whenLoaded('account')),
         ];
     }
 }

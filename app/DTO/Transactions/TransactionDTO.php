@@ -9,6 +9,7 @@ class TransactionDTO
 {
     public function __construct(
         public string $user_id,
+        public string $account_id,
         public ?string $description,
         public float $value,
         public float $previous_balance,

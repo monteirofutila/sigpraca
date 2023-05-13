@@ -16,12 +16,9 @@ class MarketResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => 'markets',
-            'attributes' => [
-                'name' => $this->name,
-                'address' => $this->address,
-                'description' => $this->description,
-            ],
+            'name' => $this->name,
+            'address' => $this->address,
+            'description' => $this->description,
         ];
     }
 }

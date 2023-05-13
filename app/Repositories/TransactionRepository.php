@@ -15,7 +15,11 @@ class TransactionRepository extends AbstractRepository implements TransactionRep
 
     public function getByWorker(string $workerID): Collection
     {
-        return $this->model->where('worker_id', $workerID)->get();
+        return $this->model->with('account.worker')->whereHas('account', function ($query) use ($workerID) {
+            $query->whereHas('worker', function ($query2) use ($workerID) {
+                $query2->id = $workerID;
+            });
+        })->get();
     }
 
 }

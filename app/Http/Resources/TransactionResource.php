@@ -16,14 +16,12 @@ class TransactionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => 'transactions',
-            'attributes' => [
-                'description' => $this->description,
-                'value' => $this->value,
-                'previous_balance' => $this->previous_balance,
-                'current_balance' => $this->current_balance,
-                'created_at' => $this->created_at,
-            ],
+            'description' => $this->description,
+            'value' => $this->value,
+            'previous_balance' => $this->previous_balance,
+            'current_balance' => $this->current_balance,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'account' => new AccountResource($this->whenLoaded('account')),
         ];
     }
 }

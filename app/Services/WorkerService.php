@@ -6,6 +6,7 @@ use App\DTO\Accounts\AccountDTO;
 use App\DTO\Workers\CreateWorkerDTO;
 use App\DTO\Workers\UpdateWorkerDTO;
 use App\Exceptions\ResourceNotFoundException;
+use App\Exceptions\ServerException;
 use App\Helpers\FunctionHelper;
 use App\Repositories\AccountRepository;
 use App\Repositories\CategoryRepository;
@@ -50,10 +51,10 @@ class WorkerService
 
             //criar conta para o trabalhador cadastrado
             $accountDTO = new AccountDTO(
-                $worker->id,
-                $category->id,
-                null,
-                0
+                worker_id: $worker->id,
+                category_id: $category->id,
+                description: null,
+                balance: 0
             );
 
             $this->accountRepository->new($accountDTO->toArray());
@@ -61,26 +62,37 @@ class WorkerService
             DB::commit();
 
             return $worker;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             DB::rollBack();
-            throw $e;
+            throw new ServerException;
         }
 
     }
 
     public function update(UpdateWorkerDTO $dto, string $id): ?object
     {
-        $worker = $this->repository->findById($id);
+        DB::beginTransaction();
+        try {
 
-        if ($dto->photo) {
-            $image_path = FunctionHelper::uploadPhoto($dto->photo, 'workers');
-            $dto->photo = $image_path;
-            FunctionHelper::deletePhoto($worker->photo);
+            $worker = $this->repository->findById($id);
+
+            if ($dto->photo) {
+                $image_path = FunctionHelper::uploadPhoto($dto->photo, 'workers');
+                $dto->photo = $image_path;
+                FunctionHelper::deletePhoto($worker->photo);
+            }
+
+            $data = $this->repository->update($id, $dto->toArray());
+            throw_if(!$data, new ResourceNotFoundException);
+
+            DB::commit();
+
+            return $data;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new ServerException;
         }
 
-        $data = $this->repository->update($id, $dto->toArray());
-        throw_if(!$data, new ResourceNotFoundException);
-        return $data;
     }
 
     public function delete(string $id): bool

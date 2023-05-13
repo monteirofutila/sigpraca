@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DTO\Debits\DebitDTO;
 use App\DTO\Transactions\TransactionDTO;
 use App\Exceptions\ResourceNotFoundException;
+use App\Exceptions\ServerException;
 use App\Repositories\AccountRepository;
 use App\Repositories\DebitRepository;
 use App\Repositories\TransactionRepository;
@@ -32,9 +33,9 @@ class DebitService
             $description = 'Debit';
 
             $debitDTO = new DebitDTO(
-                $account->id,
-                $description,
-                $account->category->debit
+                account_id: $account->id,
+                description: $description,
+                value: $account->category->debit
             );
 
             $debit = $this->debitRepository->new($debitDTO->toArray());
@@ -44,13 +45,14 @@ class DebitService
             $userID = auth()->user()->id;
 
             $transactionDTO = new TransactionDTO(
-                $userID,
-                $description,
-                $debitDTO->value,
-                $previous_balance,
-                $current_balance,
-                $debit->id,
-                get_class($debit), //model_type
+                user_id: $userID,
+                account_id: $account->id,
+                description: $description,
+                value: $debitDTO->value,
+                previous_balance: $previous_balance,
+                current_balance: $current_balance,
+                model_id: $debit->id,
+                model_type: $debit::class, //model_type
             );
 
             $transaction = $this->transactionRepository->new($transactionDTO->toArray());
@@ -58,9 +60,9 @@ class DebitService
             DB::commit();
 
             return $transaction;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             DB::rollBack();
-            throw $e;
+            throw new ServerException;
         }
 
 

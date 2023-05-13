@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DTO\Credits\CreditDTO;
 use App\DTO\Transactions\TransactionDTO;
 use App\Exceptions\ResourceNotFoundException;
+use App\Exceptions\ServerException;
 use App\Repositories\AccountRepository;
 use App\Repositories\CreditRepository;
 use App\Repositories\TransactionRepository;
@@ -32,9 +33,9 @@ class CreditService
             $description = 'Credit';
 
             $creditDTO = new CreditDTO(
-                $account->id,
-                $description,
-                $account->category->credit
+                account_id: $account->id,
+                description: $description,
+                value: $account->category->credit
             );
 
             $credit = $this->creditRepository->new($creditDTO->toArray());
@@ -44,13 +45,14 @@ class CreditService
             $userID = auth()->user()->id;
 
             $transactionDTO = new TransactionDTO(
-                $userID,
-                $description,
-                $creditDTO->value,
-                $previous_balance,
-                $current_balance,
-                $credit->id,
-                get_class($credit), //model_type
+                user_id: $userID,
+                account_id: $account->id,
+                description: $description,
+                value: $creditDTO->value,
+                previous_balance: $previous_balance,
+                current_balance: $current_balance,
+                model_id: $credit->id,
+                model_type: $credit::class, //model_type
             );
 
             $transaction = $this->transactionRepository->new($transactionDTO->toArray());
@@ -58,9 +60,9 @@ class CreditService
             DB::commit();
 
             return $transaction;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             DB::rollBack();
-            throw $e;
+            throw new ServerException;
         }
     }
 }

@@ -16,12 +16,11 @@ class AccountResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => 'accounts',
-            'attributes' => [
-                'category' => $this->category->name,
-                'description' => $this->description,
-                'balance' => $this->balance,
-            ],
+            'category' => $this->category->name,
+            'description' => $this->description,
+            'balance' => $this->balance,
+            'worker' => new WorkerResource($this->whenLoaded('worker')),
+            'transactions' => TransactionResource::collection($this->whenLoaded('transactions')),
         ];
     }
 }

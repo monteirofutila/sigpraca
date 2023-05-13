@@ -16,6 +16,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'user_id',
+        'account_id',
         'description',
         'value',
         'previous_balance',
@@ -27,6 +28,11 @@ class Transaction extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(Account::class);
     }
 
     public function model(): MorphTo

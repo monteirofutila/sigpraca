@@ -15,6 +15,9 @@ return new class extends Migration {
             $table->foreignUuid('user_id')->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->foreignUuid('account_id')->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->text('description')->nullable();
             $table->decimal('value', 10, 2);
             $table->decimal('previous_balance', 10, 2);
