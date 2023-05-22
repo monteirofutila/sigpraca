@@ -24,7 +24,7 @@ class StoreWorkerRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'nullable|email|unique:workers,email',
-            'photo' => 'nullable|file|mimes:png,jpg',
+            'photo' => 'nullable|image|max:2048|mimes:png,jpg',
             'phone_mobile' => 'nullable|string',
             'phone_other' => 'nullable|string',
             'address_country' => 'nullable|string',

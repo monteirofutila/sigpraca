@@ -31,7 +31,7 @@ class UserResource extends JsonResource
             'date_birth' => $this->date_birth,
             'gender' => $this->gender,
             'bi' => $this->bi,
-            //'roles' => $this->getRolesName(),
+            'roles' => $this->getRoleNames(),
             'permissions' => PermissionResource::collection($this->getAllPermissions()),
         ];
     }

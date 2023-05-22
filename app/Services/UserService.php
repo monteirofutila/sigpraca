@@ -44,6 +44,7 @@ class UserService
             }
 
             $user = $this->repository->new($dto->toArray());
+            $user->assignRole($dto->role);
 
             DB::commit();
 

@@ -26,7 +26,7 @@ class StoreUserRequest extends FormRequest
             'user_name' => 'required|string|unique:users,user_name',
             'email' => 'nullable|email|unique:users,email',
             'password' => 'required|confirmed|min:8',
-            'photo' => 'nullable|file|mimes:png,jpg',
+            'photo' => 'nullable|image|max:2048|mimes:png,jpg',
             'phone_mobile' => 'nullable|string',
             'phone_other' => 'nullable|string',
             'address_country' => 'nullable|string',
@@ -36,6 +36,7 @@ class StoreUserRequest extends FormRequest
             'date_birth' => 'nullable|date|date_format:Y-m-d',
             'gender' => 'required|in:M,F',
             'bi' => 'nullable|string|size:14|unique:users,bi',
+            'role' => 'required|string|exists:roles,name'
         ];
     }
 }

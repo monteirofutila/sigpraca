@@ -21,6 +21,7 @@ class UpdateUserDTO
         public $date_birth,
         public string $gender,
         public ?string $bi,
+        public string $role,
     ) {
     }
 
@@ -48,6 +49,7 @@ class UpdateUserDTO
             $request->date_birth,
             $request->gender,
             $request->bi,
+            $request->role,
         );
     }
 }

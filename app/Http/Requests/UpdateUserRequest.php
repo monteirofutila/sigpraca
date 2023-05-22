@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
             'user_name' => 'required|string|unique:users,user_name',
             'email' => 'nullable|email|unique:users,email',
             'password' => 'nullable|min:8|confirmed',
-            'photo' => 'nullable|file|mimes:png,jpg',
+            'photo' => 'nullable|image|max:2048|mimes:png,jpg',
             'phone_mobile' => 'nullable|string',
             'phone_other' => 'nullable|string',
             'address_country' => 'nullable|string',
