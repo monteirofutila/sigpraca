@@ -17,23 +17,23 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $dto = LoginDTO::makeFromRequest($request);
-        $token = $this->service->login($dto);
-
-        if (!$token) {
+        $data = $this->service->login($dto);
+        
+        if (!$data) {
             return response()->json([
                 'message' => 'The provided credentials do not match our records.'
             ], 401);
         }
 
         return response()->json([
-            'token' => $token,
-            'user' => new UserResource($this->service->me()),
+            'token' => $data['token'],
+            'user' => new UserResource($data['user']),
         ], 200);
     }
 
-    public function me()
+    public function me(Request $request)
     {
-        return new UserResource($this->service->me());
+        return new UserResource($this->service->me($request));
     }
 
     public function logout(Request $request)

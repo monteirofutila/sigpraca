@@ -14,20 +14,25 @@ class AuthService
     ) {
     }
 
-    public function login(LoginDTO $dto): string|bool
+    public function login(LoginDTO $dto): array|bool
     {
         $user = $this->repository->findByUserName($dto->user_name);
-
+        
         if (!$user || !Hash::check($dto->password, $user->password)) {
             return false;
         }
 
-        return $user->createToken('API Token')->plainTextToken;
+        $data = [
+           'token' => $user->createToken('API Token')->plainTextToken,
+           'user' => $user,
+        ];
+        
+        return $data;
     }
 
-    public function me()
+    public function me(Request $request)
     {
-        return auth()->user();
+        return $request->user();
     }
 
     public function logout(Request $request)
