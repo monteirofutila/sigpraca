@@ -13,13 +13,23 @@ class TransactionRepository extends AbstractRepository implements TransactionRep
         parent::__construct($transaction);
     }
 
+    public function getAll(): Collection
+    {
+        return $this->model->with('account.worker', 'user')->get();
+    }
+
     public function getByWorker(string $workerID): Collection
     {
-        return $this->model->with('account.worker')->whereHas('account', function ($query) use ($workerID) {
+        return $this->model->with('account.worker', 'user')->whereHas('account', function ($query) use ($workerID) {
             $query->whereHas('worker', function ($query2) use ($workerID) {
                 $query2->id = $workerID;
             });
         })->get();
+    }
+
+    public function getCount()
+    {
+        return $this->model->count();
     }
 
 }

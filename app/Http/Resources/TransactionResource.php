@@ -22,6 +22,7 @@ class TransactionResource extends JsonResource
             'current_balance' => $this->current_balance,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'account' => new AccountResource($this->whenLoaded('account')),
+            'user' => new UserResource( $this->whenLoaded('user')),
         ];
     }
 }

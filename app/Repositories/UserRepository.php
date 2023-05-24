@@ -46,5 +46,21 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         return null;
     }
 
+    public function getCount()
+    {
+        return $this->model->count();
+    }
+
+    public function getCountByRoles()
+    {
+        return $this->model->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->groupBy('roles.id')
+            ->get([
+                'roles.name as role_name',
+                \DB::raw('COUNT(roles.name) as users_count')
+            ]);
+    }
+
 
 }

@@ -12,4 +12,9 @@ class CreditRepository extends AbstractRepository implements CreditRepositoryInt
         parent::__construct($credit);
     }
 
+    public function getCount()
+    {
+        return $this->model->count();
+    }
+
 }

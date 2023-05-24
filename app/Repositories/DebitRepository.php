@@ -12,4 +12,9 @@ class DebitRepository extends AbstractRepository implements DebitRepositoryInter
         parent::__construct($debit);
     }
 
+    public function getCount()
+    {
+        return $this->model->count();
+    }
+
 }
