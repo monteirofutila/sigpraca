@@ -6,6 +6,7 @@ use App\Repositories\CreditRepository;
 use App\Repositories\DebitRepository;
 use App\Repositories\TransactionRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\WorkerRepository;
 
 class StatistService
 {
@@ -14,22 +15,18 @@ class StatistService
         protected TransactionRepository $transactioRepository,
         protected CreditRepository $creditRepository,
         protected DebitRepository $debitRepository,
+        protected WorkerRepository $workerRepository,
     ) {
     }
 
     public function stast(): ?object
     {
 
-        $response['users'] = $this->userRepository->getCount();
-        $data = $this->userRepository->getCountByRoles();
-
-        foreach ($data as $value) { # code...
-            $response[$value->role_name] = $value->users_count;
-        }
-
-        $response['credits'] = $this->creditRepository->getCount();
-        $response['debits'] = $this->debitRepository->getCount();
-        $response['transactions'] = $this->transactioRepository->getCount();
+        $response['users_count'] = $this->userRepository->getCount();
+        $response['workers_count'] = $this->workerRepository->getCount();
+        $response['credits_ count'] = $this->creditRepository->getCount();
+        $response['debits_count'] = $this->debitRepository->getCount();
+        $response['transactions_count'] = $this->transactioRepository->getCount();
 
         return (object) $response;
     }

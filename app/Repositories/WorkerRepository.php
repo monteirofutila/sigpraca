@@ -16,4 +16,8 @@ class WorkerRepository extends AbstractRepository implements WorkerRepositoryInt
     {
         return $this->model->where('email', $email)->first();
     }
+    public function getCount()
+    {
+        return $this->model->count();
+    }
 }
