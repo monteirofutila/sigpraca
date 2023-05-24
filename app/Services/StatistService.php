@@ -24,7 +24,7 @@ class StatistService
 
         $response['users_count'] = $this->userRepository->getCount();
         $response['workers_count'] = $this->workerRepository->getCount();
-        $response['credits_ count'] = $this->creditRepository->getCount();
+        $response['credits_count'] = $this->creditRepository->getCount();
         $response['debits_count'] = $this->debitRepository->getCount();
         $response['transactions_count'] = $this->transactioRepository->getCount();
 
