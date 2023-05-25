@@ -13,6 +13,11 @@ class TransactionRepository extends AbstractRepository implements TransactionRep
         parent::__construct($transaction);
     }
 
+    public function new(array $data): object
+    {
+        return $this->model->create($data)->load('account.worker', 'user');
+    }
+
     public function getAll(): Collection
     {
         return $this->model->with('account.worker', 'user')->get();

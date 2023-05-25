@@ -16,7 +16,13 @@ class AccountResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'category' => $this->category->name,
+            'category' => $this->whenLoaded('category', function () {
+                return [
+                    'name' => $this->category->name,
+                    'credit' => $this->category->credit,
+                    'debit' => $this->category->debit,
+                ];
+            }),
             'description' => $this->description,
             'balance' => $this->balance,
             'worker' => new WorkerResource($this->whenLoaded('worker')),

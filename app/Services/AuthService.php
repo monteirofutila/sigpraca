@@ -30,6 +30,17 @@ class AuthService
         return $data;
     }
 
+    public function passwordConfirmation(string $password): bool
+    {
+        $user = auth()->user();
+        
+        if (!$user || !Hash::check($password, $user->password)) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function me(Request $request)
     {
         return $request->user();

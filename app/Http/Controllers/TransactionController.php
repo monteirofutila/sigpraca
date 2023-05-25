@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\Credits\CreditDTO;
-use App\DTO\Debits\DebitDTO;
-use App\Http\Requests\StoreCreditRequest;
-use App\Http\Requests\StoreDebitRequest;
+use App\Http\Requests\TransactionCreditDebitRequest;
 use App\Http\Resources\TransactionResource;
+use App\Services\AuthService;
 use App\Services\CreditService;
 use App\Services\DebitService;
 use App\Services\TransactionService;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
     public function __construct(
+        protected AuthService $authService,
         protected CreditService $creditService,
         protected DebitService $debitService,
         protected TransactionService $transactionService
@@ -35,16 +35,28 @@ class TransactionController extends Controller
         );
     }
 
-    public function credit(string $workerID)
+    public function credit(TransactionCreditDebitRequest $request, string $workerID)
     {
         //
+        if(!$this->authService->passwordConfirmation($request->password)){
+            return response()->json([
+                'message' => 'Credentials do not match'
+            ], 400);
+        }
+
         $transaction = $this->creditService->add($workerID);
         return new TransactionResource($transaction);
     }
 
-    public function debit(string $workerID)
+    public function debit(TransactionCreditDebitRequest $request, string $workerID)
     {
         //
+        if(!$this->authService->passwordConfirmation($request->password)){
+            return response()->json([
+                'message' => 'Credentials do not match'
+            ], 400);
+        }
+
         $transaction = $this->debitService->add($workerID);
         return new TransactionResource($transaction);
     }
