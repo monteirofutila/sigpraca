@@ -1,0 +1,43 @@
+name: 
+on:
+  push:
+    branches: [ develop-local ]
+  pull_request:
+    branches: [ develop-local ]
+
+jobs:
+  laravel-tests:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      with:
+        php-version: '8.1'
+    - uses: actions/checkout@v2
+    - name: Copy .env
+      run: php -r "file_exists('.env.example') || copy('.env.example', '.env');"
+   # - name: composer update all dependencies
+   #   run: composer update
+    - name: Install Dependencies
+   #   run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      run: composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Generate key
+      run: php artisan key:generate
+    - name: Optimizing Configuration Loading
+      run: php artisan config:cache
+    - name: Optimizing Route Loading
+      run: php artisan route:cache
+    - name: Optimizing View Loading
+      run: php artisan view:cache
+    - name: Directory Permissions
+      run: chmod -R 777 storage bootstrap/cache     
+    - name: Started sync all 🎁 files
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      with:
+             server: ${{secrets.SERVER_SIGM_api}}
+             username: ${{secrets.USERNAME_SIGM_api}}
+             password: ${{secrets.PASSWORD_SIGM_api}}
+             exclude: |
+                **/.git*
+                **/.git*/**
+                **/node_modules/**
