@@ -1,2 +1,2 @@
-# SIGPRACA
-Sistema de Gerenciamento de Praças (Mercados Informal)
+# SIGM
+Sistema de Gerenciamento de Mercado
