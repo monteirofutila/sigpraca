@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTO\Users\CreateUserDTO;
 use App\DTO\Users\UpdateUserDTO;
+use App\Exceptions\ForbiddenException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Exceptions\ServerException;
 use App\Helpers\FunctionHelper;
@@ -20,6 +21,8 @@ class UserService
 
     public function findById(string $id): ?object
     {
+        throw_if(!auth()->user()->can('users-read'), new ForbiddenException);
+
         $data = $this->repository->findById($id);
         throw_if(!$data, new ResourceNotFoundException);
         return $data;
@@ -28,11 +31,15 @@ class UserService
 
     public function getAll(): Collection
     {
+        throw_if(!auth()->user()->can('users-read'), new ForbiddenException);
+
         return $this->repository->getAll();
     }
 
     public function new(CreateUserDTO $dto): ?object
     {
+        throw_if(!auth()->user()->can('users-create'), new ForbiddenException);
+
         DB::beginTransaction();
 
         try {
@@ -43,7 +50,12 @@ class UserService
                 $dto->photo = $image_path;
             }
 
-            $user = $this->repository->new($dto->toArray());
+            $prefix = ucfirst(substr($dto->role, 0, 2));
+
+            $data = $dto->toArray();
+            $data['code_number'] = FunctionHelper::generateCodeNumber($prefix);
+
+            $user = $this->repository->new($data);
             $user->assignRole($dto->role);
 
             DB::commit();
@@ -57,6 +69,8 @@ class UserService
 
     public function update(UpdateUserDTO $dto, string $id): ?object
     {
+        throw_if(!auth()->user()->can('users-update'), new ForbiddenException);
+
         DB::beginTransaction();
 
         try {
@@ -70,7 +84,9 @@ class UserService
             if ($dto->photo) {
                 $image_path = FunctionHelper::uploadPhoto($dto->photo, 'users');
                 $dto->photo = $image_path;
-                FunctionHelper::deletePhoto($user->photo);
+                if ($user->photo) {
+                    FunctionHelper::deletePhoto($user->photo);
+                }
             }
 
             $data = $this->repository->update($id, $dto->toArray());
@@ -87,6 +103,8 @@ class UserService
 
     public function delete(string $id): bool
     {
+        throw_if(!auth()->user()->can('users-delete'), new ForbiddenException);
+
         $data = $this->repository->delete($id);
         throw_if(!$data, new ResourceNotFoundException);
         return $data;

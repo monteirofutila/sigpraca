@@ -9,7 +9,6 @@ class CategoryDTO
     public function __construct(
         public string $name,
         public string $description,
-        public float $credit,
         public float $debit,
     ) {
     }
@@ -26,7 +25,6 @@ class CategoryDTO
         return new self(
             $request->name,
             $request->description,
-            $request->credit,
             $request->debit,
         );
     }

@@ -6,11 +6,11 @@ use Exception;
 
 class ServerException extends Exception
 {
-    protected $message = 'Server error';
+    protected $message = 'Server error...';
     public function render()
     {
         return response()->json([
-            'message' => $this->message ?? $this->getMessage()
+            'message' => $this->message
         ], 500);
     }
 }

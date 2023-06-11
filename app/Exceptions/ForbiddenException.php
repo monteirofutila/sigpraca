@@ -4,15 +4,13 @@ namespace App\Exceptions;
 
 use Exception;
 
-class ResourceNotFoundException extends Exception
+class ForbiddenException extends Exception
 {
-    //
-    protected $message = 'Resource not found...';
+    protected $message = 'Access denied. You do not have permission to access this resource...';
     public function render()
     {
         return response()->json([
             'message' => $this->message
-        ], 404);
+        ], 403);
     }
-
 }

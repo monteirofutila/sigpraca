@@ -4,8 +4,10 @@ namespace App\Services;
 
 use App\DTO\Credits\CreditDTO;
 use App\DTO\Transactions\TransactionDTO;
+use App\Exceptions\ForbiddenException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Exceptions\ServerException;
+use App\Helpers\FunctionHelper;
 use App\Repositories\AccountRepository;
 use App\Repositories\CreditRepository;
 use App\Repositories\TransactionRepository;
@@ -20,8 +22,10 @@ class CreditService
     ) {
     }
 
-    public function add(string $workerID): ?object
+    public function add(string $workerID, float $creditValue): ?object
     {
+        throw_if(!auth()->user()->can('transactions-credit'), new ForbiddenException);
+
         DB::beginTransaction();
 
         try {
@@ -35,7 +39,7 @@ class CreditService
             $creditDTO = new CreditDTO(
                 account_id: $account->id,
                 description: $description,
-                value: $account->category->credit
+                value: $creditValue
             );
 
             $credit = $this->creditRepository->new($creditDTO->toArray());
@@ -45,6 +49,7 @@ class CreditService
             $userID = auth()->user()->id;
 
             $transactionDTO = new TransactionDTO(
+                code_number: FunctionHelper::generateCodeNumber(),
                 user_id: $userID,
                 account_id: $account->id,
                 description: $description,

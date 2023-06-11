@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\AccountRepositoryInterface;
 use App\Models\Account;
+use Illuminate\Database\Eloquent\Collection;
 
 class AccountRepository extends AbstractRepository implements AccountRepositoryInterface
 {
@@ -30,4 +31,19 @@ class AccountRepository extends AbstractRepository implements AccountRepositoryI
         $model->decrement('balance', $value);
         return $model;
     }
+
+    public function checkDebitDayByWorker(string $accountID): bool
+    {
+        // Obter a data atual no formato Y-m-d
+        $currentDate = date('Y-m-d');
+        $debit = $this->model->with('debits')->find($accountID)->debits()->whereDate('created_at', $currentDate)
+            ->first();
+
+        if ($debit) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

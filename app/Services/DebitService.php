@@ -4,8 +4,11 @@ namespace App\Services;
 
 use App\DTO\Debits\DebitDTO;
 use App\DTO\Transactions\TransactionDTO;
+use App\Exceptions\ForbiddenException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Exceptions\ServerException;
+use App\Exceptions\ValidationException;
+use App\Helpers\FunctionHelper;
 use App\Repositories\AccountRepository;
 use App\Repositories\DebitRepository;
 use App\Repositories\TransactionRepository;
@@ -22,12 +25,18 @@ class DebitService
 
     public function add(string $workerID): ?object
     {
+        throw_if(!auth()->user()->can('transactions-debit'), new ForbiddenException);
+
         DB::beginTransaction();
 
         try {
 
             $account = $this->accountRepository->findByWorker($workerID);
             throw_if(!$account, new ResourceNotFoundException);
+
+            //verifica se ja existe uma operação no dia actual
+            $existingTransaction = $this->accountRepository->checkDebitDayByWorker($account->id);
+            throw_if($existingTransaction, new ValidationException);
 
             $previous_balance = $account->balance;
             $description = 'Debit';
@@ -38,6 +47,9 @@ class DebitService
                 value: $account->category->debit
             );
 
+            //verifica se o saldo é suficiente para debitar
+            throw_if($account->balance < $debitDTO->value, new ValidationException);
+
             $debit = $this->debitRepository->new($debitDTO->toArray());
             $account = $this->accountRepository->decrementBalance($account->id, $debit->value);
 
@@ -45,6 +57,7 @@ class DebitService
             $userID = auth()->user()->id;
 
             $transactionDTO = new TransactionDTO(
+                code_number: FunctionHelper::generateCodeNumber(),
                 user_id: $userID,
                 account_id: $account->id,
                 description: $description,
@@ -64,7 +77,6 @@ class DebitService
             DB::rollBack();
             throw new ServerException;
         }
-
 
     }
 }

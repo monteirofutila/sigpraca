@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\DTO\Auth\LoginDTO;
 use App\Repositories\UserRepository;
+use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService
@@ -14,12 +16,16 @@ class AuthService
     ) {
     }
 
-    public function login(LoginDTO $dto): array|bool
+    public function login(LoginDTO $dto): array|bool|object
     {
         $user = $this->repository->findByUserName($dto->user_name);
         
         if (!$user || !Hash::check($dto->password, $user->password)) {
-            return false;
+            
+            return response()->json([
+                'message' => 'The provided credentials do not match our records.'
+            ], 401);
+        
         }
 
         $data = [

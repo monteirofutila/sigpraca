@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('workers', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('code_number')->unique();
+            $table->string('name')->index();
             $table->string('email')->unique()->nullable();
             $table->string('photo')->nullable();
             $table->string('phone_mobile')->nullable();

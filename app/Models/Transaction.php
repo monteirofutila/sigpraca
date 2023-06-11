@@ -15,6 +15,7 @@ class Transaction extends Model
     protected $table = 'transactions';
 
     protected $fillable = [
+        'code_number',
         'user_id',
         'account_id',
         'description',

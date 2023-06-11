@@ -19,6 +19,7 @@ class MarketResource extends JsonResource
             'name' => $this->name,
             'address' => $this->address,
             'description' => $this->description,
+            'photo' => asset('storage/' . $this->photo),
         ];
     }
 }

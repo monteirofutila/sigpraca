@@ -38,20 +38,20 @@ class TransactionController extends Controller
     public function credit(TransactionCreditDebitRequest $request, string $workerID)
     {
         //
-        if(!$this->authService->passwordConfirmation($request->password)){
+        if (!$this->authService->passwordConfirmation($request->password)) {
             return response()->json([
                 'message' => 'Credentials do not match'
             ], 400);
         }
 
-        $transaction = $this->creditService->add($workerID);
+        $transaction = $this->creditService->add($workerID, $request->value);
         return new TransactionResource($transaction);
     }
 
     public function debit(TransactionCreditDebitRequest $request, string $workerID)
     {
         //
-        if(!$this->authService->passwordConfirmation($request->password)){
+        if (!$this->authService->passwordConfirmation($request->password)) {
             return response()->json([
                 'message' => 'Credentials do not match'
             ], 400);

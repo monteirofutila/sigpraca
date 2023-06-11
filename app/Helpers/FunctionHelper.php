@@ -28,4 +28,18 @@ class FunctionHelper
     {
         Storage::delete($path);
     }
+
+    static function generateCodeNumber(string $prefix = null): string
+    {
+        $microtime = microtime(); // Obter o timestamp atual
+        $microtime = str_replace([' ', '.'], '', $microtime);
+
+        if ($prefix) {
+            $microtime = substr($microtime, 1, 6);
+        } else {
+            $microtime = substr($microtime, 0, 9);
+        }
+
+        return $prefix . $microtime;
+    }
 }

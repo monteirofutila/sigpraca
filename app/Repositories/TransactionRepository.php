@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\TransactionRepositoryInterface;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
 class TransactionRepository extends AbstractRepository implements TransactionRepositoryInterface

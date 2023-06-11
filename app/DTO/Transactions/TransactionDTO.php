@@ -2,12 +2,10 @@
 
 namespace App\DTO\Transactions;
 
-use App\Http\Requests\StoreTransactionRequest;
-
-
 class TransactionDTO
 {
     public function __construct(
+        public string $code_number,
         public string $user_id,
         public string $account_id,
         public ?string $description,

@@ -18,12 +18,6 @@ class AuthController extends Controller
     {
         $dto = LoginDTO::makeFromRequest($request);
         $data = $this->service->login($dto);
-        
-        if (!$data) {
-            return response()->json([
-                'message' => 'The provided credentials do not match our records.'
-            ], 401);
-        }
 
         return response()->json([
             'token' => $data['token'],

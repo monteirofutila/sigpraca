@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DTO\Accounts\AccountDTO;
 use App\DTO\Workers\CreateWorkerDTO;
 use App\DTO\Workers\UpdateWorkerDTO;
+use App\Exceptions\ForbiddenException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Exceptions\ServerException;
 use App\Helpers\FunctionHelper;
@@ -25,6 +26,8 @@ class WorkerService
 
     public function findById(string $id): ?object
     {
+        throw_if(!auth()->user()->can('workers-read'), new ForbiddenException);
+
         $data = $this->repository->findById($id);
         throw_if(!$data, new ResourceNotFoundException);
         return $data;
@@ -33,11 +36,15 @@ class WorkerService
 
     public function getAll(): Collection
     {
+        throw_if(!auth()->user()->can('workers-read'), new ForbiddenException);
+
         return $this->repository->getAll();
     }
 
     public function new(CreateWorkerDTO $dto): ?object
     {
+        throw_if(!auth()->user()->can('workers-create'), new ForbiddenException);
+
         DB::beginTransaction();
 
         try {
@@ -46,7 +53,12 @@ class WorkerService
                 $dto->photo = $image_path;
             }
 
-            $worker = $this->repository->new($dto->toArray());
+            $prefix = ucfirst(substr($dto->name, 0, 1));
+
+            $data = $dto->toArray();
+            $data['code_number'] = FunctionHelper::generateCodeNumber($prefix);
+
+            $worker = $this->repository->new($data);
             $category = $this->categoryRepository->getFirst();
 
             //criar conta para o trabalhador cadastrado
@@ -71,6 +83,8 @@ class WorkerService
 
     public function update(UpdateWorkerDTO $dto, string $id): ?object
     {
+        throw_if(!auth()->user()->can('workers-update'), new ForbiddenException);
+
         DB::beginTransaction();
         try {
 
@@ -79,7 +93,9 @@ class WorkerService
             if ($dto->photo) {
                 $image_path = FunctionHelper::uploadPhoto($dto->photo, 'workers');
                 $dto->photo = $image_path;
-                FunctionHelper::deletePhoto($worker->photo);
+                if ($worker->photo) {
+                    FunctionHelper::deletePhoto($worker->photo);
+                }
             }
 
             $data = $this->repository->update($id, $dto->toArray());
@@ -97,6 +113,8 @@ class WorkerService
 
     public function delete(string $id): bool
     {
+        throw_if(!auth()->user()->can('workers-delete'), new ForbiddenException);
+
         $data = $this->repository->delete($id);
         throw_if(!$data, new ResourceNotFoundException);
         return $data;

@@ -9,8 +9,9 @@ class MarketDTO
 {
     public function __construct(
         public string $name,
-        public string $address,
-        public string $description,
+        public ?string $description,
+        public ?string $address,
+        public $photo,
     ) {
     }
 
@@ -25,8 +26,9 @@ class MarketDTO
     {
         return new self(
             $request->name,
-            $request->address,
             $request->description,
+            $request->address,
+            $request->photo
         );
     }
 }

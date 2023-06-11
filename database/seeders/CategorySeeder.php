@@ -22,8 +22,7 @@ class CategorySeeder extends Seeder
 			[
 				"name" => "VENDEDOR",
 				"description" => "VENDEDOR",
-				"credit" => "1000",
-				"debit" => "100"
+				"debit" => 100
 			],
 		];
 

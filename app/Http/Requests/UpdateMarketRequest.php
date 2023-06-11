@@ -24,7 +24,8 @@ class UpdateMarketRequest extends FormRequest
         return [
             'name' => 'required|string',
             'address' => 'nullable|string',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string',
+            'photo' => 'nullable|image|max:2048|mimes:png,jpg',
         ];
     }
 }

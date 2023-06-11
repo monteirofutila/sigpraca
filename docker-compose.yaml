@@ -27,7 +27,7 @@ services:
       - ./docker/nginx/:/etc/nginx/conf.d/
     networks:
       - laravel
-
+ 
   # db mysql
   mysql:
     image: mysql

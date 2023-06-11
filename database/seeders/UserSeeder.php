@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
     {
 
         $user = $this->repository->new([
+            'code_number' => 'AD' . random_int(100000, 999999),
             'name' => 'Administrador',
             'user_name' => 'admin',
             'email' => 'admin@app.com',
@@ -31,6 +32,7 @@ class UserSeeder extends Seeder
         $user->assignRole('Administrador');
 
         $user = $this->repository->new([
+            'code_number' => 'CA' . random_int(100000, 999999),
             'name' => 'Operador de caixa',
             'user_name' => 'caixa',
             'email' => 'caixa@app.com',
@@ -41,6 +43,7 @@ class UserSeeder extends Seeder
         $user->assignRole('Caixa');
 
         $user = $this->repository->new([
+            'code_number' => 'FI' . random_int(100000, 999999),
             'name' => 'Fiscal',
             'user_name' => 'fiscal',
             'email' => 'fiscal@app.com',

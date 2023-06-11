@@ -25,6 +25,11 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'users-read']);
         Permission::create(['name' => 'users-update']);
         Permission::create(['name' => 'users-delete']);
+        Permission::create(['name' => 'transactions-credit']);
+        Permission::create(['name' => 'transactions-debit']);
+        Permission::create(['name' => 'transactions-read']);
+        Permission::create(['name' => 'transactions-update']);
+        Permission::create(['name' => 'transactions-delete']);
         Permission::create(['name' => 'workers-create']);
         Permission::create(['name' => 'workers-read']);
         Permission::create(['name' => 'workers-update']);
@@ -36,21 +41,30 @@ class PermissionSeeder extends Seeder
         $role1 = Role::create(['name' => 'Administrador']);
         $role1->givePermissionTo('markets-update');
         $role1->givePermissionTo('markets-read');
+        $role1->givePermissionTo('transactions-credit');
+        $role1->givePermissionTo('transactions-debit');
+        $role1->givePermissionTo('transactions-read');
+        $role1->givePermissionTo('transactions-update');
+        $role1->givePermissionTo('transactions-delete');
+        $role1->givePermissionTo('users-create');
+        $role1->givePermissionTo('users-read');
+        $role1->givePermissionTo('users-update');
+        $role1->givePermissionTo('users-delete');
         $role1->givePermissionTo('workers-create');
         $role1->givePermissionTo('workers-read');
         $role1->givePermissionTo('workers-update');
         $role1->givePermissionTo('workers-delete');
-        $role1->givePermissionTo('credit');
-        $role1->givePermissionTo('debit');
+        
 
         $role2 = Role::create(['name' => 'Caixa']);
-        $role2->givePermissionTo('credit');
+        $role2->givePermissionTo('transactions-credit');
+        $role2->givePermissionTo('transactions-debit');
+        $role2->givePermissionTo('transactions-read');
         $role2->givePermissionTo('workers-create');
         $role2->givePermissionTo('workers-read');
         $role2->givePermissionTo('workers-update');
-        $role2->givePermissionTo('workers-delete');
 
         $role3 = Role::create(['name' => 'Fiscal']);
-        $role1->givePermissionTo('debit');
+        $role3->givePermissionTo('transactions-debit');
     }
 }
