@@ -45,14 +45,14 @@ class DebitService
             $debitDTO = new DebitDTO(
                 account_id: $account->id,
                 description: $description,
-                value: $account->category->debit
+                amount: $account->category->debit_amount
             );
 
             //verifica se o saldo é suficiente para debitar
-            throw_if($account->balance < $debitDTO->value, new ValidationException);
+            throw_if($account->balance < $debitDTO->amount, new ValidationException);
 
             $debit = $this->debitRepository->new($debitDTO->toArray());
-            $account = $this->accountRepository->decrementBalance($account->id, $debit->value);
+            $account = $this->accountRepository->decrementBalance($account->id, $debit->amount);
 
             $current_balance = $account->balance;
             $userID = auth()->user()->id;
@@ -62,7 +62,7 @@ class DebitService
                 user_id: $userID,
                 account_id: $account->id,
                 description: $description,
-                value: $debitDTO->value,
+                amount: $debitDTO->amount,
                 previous_balance: $previous_balance,
                 current_balance: $current_balance,
                 model_id: $debit->id,
@@ -80,4 +80,5 @@ class DebitService
         }
 
     }
+
 }

@@ -36,6 +36,13 @@ class TransactionController extends Controller
         );
     }
 
+    public function getTransactionsByPeriod($startDate, $lastDate): ?object
+    {
+        return TransactionResource::collection(
+            $this->transactionService->getTransactionsByPeriod($startDate, $lastDate)
+        );
+    }
+
     public function creditbalance(TransactionCreditRequest $request, string $workerID)
     {
         //
@@ -45,7 +52,7 @@ class TransactionController extends Controller
             ], 400);
         }
 
-        $transaction = $this->creditService->add($workerID, $request->value);
+        $transaction = $this->creditService->add($workerID, $request->amount);
         return new TransactionResource($transaction);
     }
 

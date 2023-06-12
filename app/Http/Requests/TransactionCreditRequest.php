@@ -22,7 +22,7 @@ class TransactionCreditRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'value' => 'required|numeric',
+            'amount' => 'required|numeric',
             'password' => 'required|string'
         ];
     }

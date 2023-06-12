@@ -10,7 +10,7 @@ class DebitDTO
     public function __construct(
         public ?string $account_id,
         public ?string $description,
-        public float $value,
+        public float $amount,
     ) {
     }
 

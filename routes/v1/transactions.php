@@ -7,3 +7,4 @@ Route::post('workers/{workerID}/transactions/credit', [TransactionController::cl
 Route::post('workers/{workerID}/transactions/debit', [TransactionController::class, 'debitBalance'])->middleware(['auth:sanctum']);
 Route::get('workers/{workerID}/transactions', [TransactionController::class, 'getByWorker'])->middleware(['auth:sanctum']);
 Route::get('transactions', [TransactionController::class, 'index'])->middleware(['auth:sanctum']);
+Route::get('transactions/{startDate}/{lastDate}', [TransactionController::class, 'getTransactionsByPeriod'])->middleware(['auth:sanctum']);

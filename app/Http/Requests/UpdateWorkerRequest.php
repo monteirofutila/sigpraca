@@ -31,9 +31,9 @@ class UpdateWorkerRequest extends FormRequest
             'address_state' => 'nullable|string',
             'address_city' => 'nullable|string',
             'address_street' => 'nullable|string',
-            'date_birth' => 'required|date|date_format:Y-m-d',
+            'date_birth' => 'nullable|date|date_format:Y-m-d',
             'gender' => 'required|in:M,F',
-            'bi' => 'required|string|size:14|unique:workers,bi',
+            'bi' => 'nullable|string|size:14|unique:workers,bi',
             'role' => 'required|string|exists:roles,name'
         ];
     }
