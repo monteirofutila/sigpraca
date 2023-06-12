@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategoryRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class StoreCategoryRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => 'nullable|string',
-            'debit' => 'required|numeric',
+            'payment_period' => 'required|in:day,week,month,quarter,year|',
+            'debit_amount' => 'required|numeric',
         ];
     }
 }

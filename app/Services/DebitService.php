@@ -12,6 +12,7 @@ use App\Helpers\FunctionHelper;
 use App\Repositories\AccountRepository;
 use App\Repositories\DebitRepository;
 use App\Repositories\TransactionRepository;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class DebitService
@@ -34,9 +35,9 @@ class DebitService
             $account = $this->accountRepository->findByWorker($workerID);
             throw_if(!$account, new ResourceNotFoundException);
 
-            //verifica se ja existe uma operação no dia actual
-            $existingTransaction = $this->accountRepository->checkDebitDayByWorker($account->id);
-            throw_if($existingTransaction, new ValidationException);
+            //verifica se ja existe uma operação actual de acordo o periodo de pagamento
+            $existingDebit = $this->accountRepository->checkDebitPeriodByAccount($account->id);
+            throw_if($existingDebit, new ValidationException);
 
             $previous_balance = $account->balance;
             $description = 'Debit';

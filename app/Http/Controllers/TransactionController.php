@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TransactionCreditDebitRequest;
+use App\Http\Requests\TransactionCreditRequest;
+use App\Http\Requests\TransactionDebitRequest;
 use App\Http\Resources\TransactionResource;
 use App\Services\AuthService;
 use App\Services\CreditService;
@@ -35,7 +36,7 @@ class TransactionController extends Controller
         );
     }
 
-    public function credit(TransactionCreditDebitRequest $request, string $workerID)
+    public function creditbalance(TransactionCreditRequest $request, string $workerID)
     {
         //
         if (!$this->authService->passwordConfirmation($request->password)) {
@@ -48,7 +49,7 @@ class TransactionController extends Controller
         return new TransactionResource($transaction);
     }
 
-    public function debit(TransactionCreditDebitRequest $request, string $workerID)
+    public function debitBalance(TransactionDebitRequest $request, string $workerID)
     {
         //
         if (!$this->authService->passwordConfirmation($request->password)) {

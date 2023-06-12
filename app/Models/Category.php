@@ -17,8 +17,8 @@ class Category extends Model
     protected $fillable = [
         'name',
         'description',
-        'credit',
-        'debit'
+        'payment_period',
+        'debit_amount'
     ];
 
     public function account(): HasMany

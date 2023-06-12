@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TransactionCreditDebitRequest extends FormRequest
+class TransactionDebitRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,6 @@ class TransactionCreditDebitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'value' => 'required|numeric',
             'password' => 'required|string'
         ];
     }

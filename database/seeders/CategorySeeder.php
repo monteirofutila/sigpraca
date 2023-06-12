@@ -20,9 +20,34 @@ class CategorySeeder extends Seeder
 	{
 		$dados = [
 			[
-				"name" => "VENDEDOR",
-				"description" => "VENDEDOR",
-				"debit" => 100
+				"name" => "BANCADA",
+				"description" => "FEIRANTE",
+				"payment_period" => "day",
+				"debit_amount" => 100
+			],
+			[
+				"name" => "AMBULANTE",
+				"description" => "FEIRANTE",
+				"payment_period" => "day",
+				"debit_amount" => 100
+			],
+			[
+				"name" => "CONTENTORES",
+				"description" => "FEIRANTE",
+				"payment_period" => "day",
+				"debit_amount" => 100
+			],
+			[
+				"name" => "ARMAZÉM",
+				"description" => "FEIRANTE",
+				"payment_period" => "day",
+				"debit_amount" => 100
+			],
+			[
+				"name" => "TAXISTA",
+				"description" => "FEIRANTE",
+				"payment_period" => "day",
+				"debit_amount" => 100
 			],
 		];
 

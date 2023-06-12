@@ -21,12 +21,4 @@ class DebitDTO
         return array_combine($keys, $properties);
     }
 
-    public static function makeFromRequest(StoreDebitRequest $request): self
-    {
-        return new self(
-            $request->account_id,
-            $request->description,
-            $request->value,
-        );
-    }
 }

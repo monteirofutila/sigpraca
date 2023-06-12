@@ -2,14 +2,15 @@
 
 namespace App\DTO\Categories;
 
-use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryDTO
 {
     public function __construct(
         public string $name,
-        public string $description,
-        public float $debit,
+        public ?string $description,
+        public string $payment_period,
+        public float $debit_amount,
     ) {
     }
 
@@ -20,12 +21,13 @@ class CategoryDTO
         return array_combine($keys, $properties);
     }
 
-    public static function makeFromRequest(StoreCategoryRequest $request): self
+    public static function makeFromRequest(CategoryRequest $request): self
     {
         return new self(
             $request->name,
             $request->description,
-            $request->debit,
+            $request->payment_period,
+            $request->debit_amount,
         );
     }
 }

@@ -19,7 +19,7 @@ class AccountResource extends JsonResource
             'category' => $this->whenLoaded('category', function () {
                 return [
                     'name' => $this->category->name,
-                    'credit' => $this->category->credit,
+                    'payment_period' => $this->category->payment_period,
                     'debit' => $this->category->debit,
                 ];
             }),
