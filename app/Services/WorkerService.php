@@ -10,7 +10,6 @@ use App\Exceptions\ResourceNotFoundException;
 use App\Exceptions\ServerException;
 use App\Helpers\FunctionHelper;
 use App\Repositories\AccountRepository;
-use App\Repositories\CategoryRepository;
 use App\Repositories\WorkerRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +19,6 @@ class WorkerService
     public function __construct(
         protected WorkerRepository $repository,
         protected AccountRepository $accountRepository,
-        protected CategoryRepository $categoryRepository,
     ) {
     }
 
@@ -41,7 +39,7 @@ class WorkerService
         return $this->repository->getAll();
     }
 
-    public function new(CreateWorkerDTO $dto): ?object
+    public function new(CreateWorkerDTO $dto, string $categoryID): ?object
     {
         throw_if(!auth()->user()->can('workers-create'), new ForbiddenException);
 
@@ -59,12 +57,11 @@ class WorkerService
             $data['code_number'] = FunctionHelper::generateCodeNumber($prefix);
 
             $worker = $this->repository->new($data);
-            $category = $this->categoryRepository->getFirst();
 
             //criar conta para o trabalhador cadastrado
             $accountDTO = new AccountDTO(
                 worker_id: $worker->id,
-                category_id: $category->id,
+                category_id: $categoryID,
                 description: null,
                 balance: 0
             );

@@ -34,7 +34,7 @@ class UpdateWorkerRequest extends FormRequest
             'date_birth' => 'nullable|date|date_format:Y-m-d',
             'gender' => 'required|in:M,F',
             'bi' => 'nullable|string|size:14|unique:workers,bi',
-            'role' => 'required|string|exists:roles,name'
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 }
