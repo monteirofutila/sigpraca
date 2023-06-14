@@ -20,7 +20,7 @@ class AccountResource extends JsonResource
                 return [
                     'name' => $this->category->name,
                     'payment_period' => $this->category->payment_period,
-                    'debit' => $this->category->debit,
+                    'debit_amount' => $this->category->debit_amount,
                 ];
             }),
             'description' => $this->description,
