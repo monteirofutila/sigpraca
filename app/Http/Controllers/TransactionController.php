@@ -28,6 +28,12 @@ class TransactionController extends Controller
         );
     }
 
+    public function show(string $workerID)
+    {
+        $response = $this->transactionService->findById($workerID);
+        return new TransactionResource($response);
+    }
+
     public function getByWorker(string $workerID)
     {
         //

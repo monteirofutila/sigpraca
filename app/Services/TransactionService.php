@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\ForbiddenException;
+use App\Exceptions\ResourceNotFoundException;
 use App\Repositories\TransactionRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -17,6 +18,14 @@ class TransactionService
     {
         throw_if(!auth()->user()->can('transactions-read'), new ForbiddenException);
         return $this->repository->getAll();
+    }
+    public function findById(string $id): ?object
+    {
+        throw_if(!auth()->user()->can('transactions-read'), new ForbiddenException);
+
+        $data = $this->repository->findById($id);
+        throw_if(!$data, new ResourceNotFoundException());
+        return $data;
     }
 
     public function getTransactionsByPeriod($startDate, $lastDate): ?object

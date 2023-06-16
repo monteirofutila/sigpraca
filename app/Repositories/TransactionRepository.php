@@ -24,6 +24,11 @@ class TransactionRepository extends AbstractRepository implements TransactionRep
         return $this->model->with('account.worker', 'user')->get();
     }
 
+    public function findById(string $id): ?object
+    {
+        return $this->model->with('account.worker', 'user')->find($id);
+    }
+
     public function getTransactionsByPeriod($startDate, $lastDate): ?object
     {
         $startDate = Carbon::parse($startDate)->startOfDay();
