@@ -25,6 +25,7 @@ class UserService
 
         $data = $this->repository->findById($id);
         throw_if(!$data, new ResourceNotFoundException);
+        
         return $data;
     }
 
@@ -87,7 +88,7 @@ class UserService
                 }
             }
 
-            $data = $this->repository->update($id, $dto->toArray());
+            $data = $this->repository->update($user->id, $dto->toArray());
             throw_if(!$data, new ResourceNotFoundException);
 
             DB::commit();
@@ -105,9 +106,10 @@ class UserService
     {
         throw_if(!auth()->user()->can('users-delete'), new ForbiddenException);
 
-        $data = $this->repository->delete($id);
-        throw_if(!$data, new ResourceNotFoundException);
-        return $data;
+        $user = $this->repository->findById($id);
+        throw_if(!$user, new ResourceNotFoundException);
+
+        return $this->repository->delete($user->id);
     }
 
     public function getRoles(string $userID): ?object

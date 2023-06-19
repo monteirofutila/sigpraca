@@ -12,6 +12,7 @@ use App\Helpers\FunctionHelper;
 use App\Repositories\AccountRepository;
 use App\Repositories\DebitRepository;
 use App\Repositories\TransactionRepository;
+use App\Repositories\WorkerRepository;
 use Illuminate\Support\Facades\DB;
 
 class DebitService
@@ -20,6 +21,7 @@ class DebitService
         protected DebitRepository $debitRepository,
         protected TransactionRepository $transactionRepository,
         protected AccountRepository $accountRepository,
+        protected WorkerRepository $workerRepository,
     ) {
     }
 
@@ -31,7 +33,8 @@ class DebitService
 
         try {
 
-            $account = $this->accountRepository->findByWorker($workerID);
+            $worker = $this->workerRepository->findById($workerID);
+            $account = $this->accountRepository->findByWorker($worker->id);
             throw_if(!$account, new ResourceNotFoundException);
 
             //verifica se ja existe uma operação actual de acordo o periodo de pagamento

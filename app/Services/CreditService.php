@@ -11,6 +11,7 @@ use App\Helpers\FunctionHelper;
 use App\Repositories\AccountRepository;
 use App\Repositories\CreditRepository;
 use App\Repositories\TransactionRepository;
+use App\Repositories\WorkerRepository;
 use Illuminate\Support\Facades\DB;
 
 class CreditService
@@ -19,6 +20,7 @@ class CreditService
         protected CreditRepository $creditRepository,
         protected TransactionRepository $transactionRepository,
         protected AccountRepository $accountRepository,
+        protected WorkerRepository $workerRepository,
     ) {
     }
 
@@ -30,7 +32,8 @@ class CreditService
 
         try {
 
-            $account = $this->accountRepository->findByWorker($workerID);
+            $worker = $this->workerRepository->findById($workerID);
+            $account = $this->accountRepository->findByWorker($worker->id);
             throw_if(!$account, new ResourceNotFoundException);
 
             $previous_balance = $account->balance;

@@ -5,12 +5,19 @@ namespace App\Repositories;
 
 use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
+use Ramsey\Uuid\Uuid;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {
     public function __construct(User $user)
     {
         parent::__construct($user);
+    }
+
+    public function findById(string $id): ?object
+    {
+        $field = Uuid::isValid($id) ? 'id' : 'code_number';
+        return $this->model->where($field, $id)->first();
     }
 
     public function findByEmail(string $email): ?object

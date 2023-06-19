@@ -93,7 +93,7 @@ class WorkerService
                 }
             }
 
-            $data = $this->repository->update($id, $dto->toArray());
+            $data = $this->repository->update($worker->id, $dto->toArray());
             throw_if(!$data, new ResourceNotFoundException);
 
             DB::commit();
@@ -112,8 +112,9 @@ class WorkerService
     {
         throw_if(!auth()->user()->can('workers-delete'), new ForbiddenException);
 
-        $data = $this->repository->delete($id);
-        throw_if(!$data, new ResourceNotFoundException);
-        return $data;
+        $worker = $this->repository->findById($id);
+        throw_if(!$worker, new ResourceNotFoundException);
+        
+        return $this->repository->delete($worker->id);
     }
 }

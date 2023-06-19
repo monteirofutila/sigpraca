@@ -5,12 +5,14 @@ namespace App\Services;
 use App\Exceptions\ForbiddenException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Repositories\TransactionRepository;
+use App\Repositories\WorkerRepository;
 use Illuminate\Database\Eloquent\Collection;
 
 class TransactionService
 {
     public function __construct(
-        protected TransactionRepository $repository,
+        protected TransactionRepository $repository, 
+        protected WorkerRepository $workerRepository,
     ) {
     }
 
@@ -37,7 +39,8 @@ class TransactionService
     public function getByWorker(string $workerID): Collection
     {
         throw_if(!auth()->user()->can('transactions-read'), new ForbiddenException);
-        return $this->repository->getByWorker($workerID);
+        $worker = $this->repository->findById($workerID);
+        return $this->repository->getByWorker($worker->id);
     }
 
 }

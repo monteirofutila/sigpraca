@@ -6,12 +6,19 @@ use App\Interfaces\TransactionRepositoryInterface;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Ramsey\Uuid\Uuid;
 
 class TransactionRepository extends AbstractRepository implements TransactionRepositoryInterface
 {
     public function __construct(Transaction $transaction)
     {
         parent::__construct($transaction);
+    }
+
+    public function findById(string $id): ?object
+    {
+        $field = Uuid::isValid($id) ? 'id' : 'code_number';
+        return $this->model->with(['account' => ['worker','category'], 'user'])->where($field, $id)->first();
     }
 
     public function new(array $data): object
@@ -22,11 +29,6 @@ class TransactionRepository extends AbstractRepository implements TransactionRep
     public function getAll(): Collection
     {
         return $this->model->with('account.worker', 'user')->get();
-    }
-
-    public function findById(string $id): ?object
-    {
-        return $this->model->with('account.worker', 'user')->find($id);
     }
 
     public function getTransactionsByPeriod($startDate, $lastDate): ?object
