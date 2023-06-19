@@ -18,7 +18,7 @@ class Credit extends Model
     protected $fillable = [
         'account_id',
         'description',
-        'value',
+        'amount',
     ];
 
     public function account(): BelongsTo

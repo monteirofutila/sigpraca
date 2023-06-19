@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\AccountRepositoryInterface;
 use App\Models\Account;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Carbon;
 
 class AccountRepository extends AbstractRepository implements AccountRepositoryInterface
 {
@@ -32,18 +32,13 @@ class AccountRepository extends AbstractRepository implements AccountRepositoryI
         return $model;
     }
 
-    public function checkDebitDayByWorker(string $accountID): bool
+    public function checkDebitPeriodByAccount(string $accountID): bool
     {
-        // Obter a data atual no formato Y-m-d
-        $currentDate = date('Y-m-d');
-        $debit = $this->model->with('debits')->find($accountID)->debits()->whereDate('created_at', $currentDate)
-            ->first();
-
-        if ($debit) {
-            return true;
-        } else {
-            return false;
-        }
+        $account = $this->model->with('debits', 'category')->find($accountID);
+        $paymentPeriod = $account->category->payment_period;
+        $firstDate = Carbon::now()->startOf($paymentPeriod);
+        $lastDate = Carbon::now()->endOf($paymentPeriod);
+        return $account->debits()->whereBetween('created_at', [$firstDate, $lastDate])->exists();
     }
 
 }

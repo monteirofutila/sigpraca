@@ -19,6 +19,10 @@ class PermissionSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
+        Permission::create(['name' => 'categories-create']);
+        Permission::create(['name' => 'categories-read']);
+        Permission::create(['name' => 'categories-update']);
+        Permission::create(['name' => 'categories-delete']);
         Permission::create(['name' => 'markets-read']);
         Permission::create(['name' => 'markets-update']);
         Permission::create(['name' => 'users-create']);
@@ -39,6 +43,10 @@ class PermissionSeeder extends Seeder
 
         // create roles and assign existing permissions
         $role1 = Role::create(['name' => 'Administrador']);
+        $role1->givePermissionTo('categories-create');
+        $role1->givePermissionTo('categories-read');
+        $role1->givePermissionTo('categories-update');
+        $role1->givePermissionTo('categories-delete');
         $role1->givePermissionTo('markets-update');
         $role1->givePermissionTo('markets-read');
         $role1->givePermissionTo('transactions-credit');
@@ -54,11 +62,11 @@ class PermissionSeeder extends Seeder
         $role1->givePermissionTo('workers-read');
         $role1->givePermissionTo('workers-update');
         $role1->givePermissionTo('workers-delete');
-        
+
 
         $role2 = Role::create(['name' => 'Caixa']);
+        $role2->givePermissionTo('categories-read');
         $role2->givePermissionTo('transactions-credit');
-        $role2->givePermissionTo('transactions-debit');
         $role2->givePermissionTo('transactions-read');
         $role2->givePermissionTo('workers-create');
         $role2->givePermissionTo('workers-read');

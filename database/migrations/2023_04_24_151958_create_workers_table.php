@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->string('address_state')->nullable();
             $table->string('address_city')->nullable();
             $table->string('address_street')->nullable();
-            $table->date('date_birth');
+            $table->date('date_birth')->nullable();
             $table->enum('gender', ['F', 'M']);
             $table->char('bi', 14)->unique()->nullable();
             $table->timestamps();

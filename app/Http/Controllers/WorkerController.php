@@ -29,7 +29,7 @@ class WorkerController extends Controller
     public function store(StoreWorkerRequest $request)
     {
         $workerDTO = CreateWorkerDTO::makeFromRequest($request);
-        $worker = $this->workerService->new($workerDTO);
+        $worker = $this->workerService->new($workerDTO, $request->category_id);
         return new WorkerResource($worker);
     }
 

@@ -19,7 +19,7 @@ class Transaction extends Model
         'user_id',
         'account_id',
         'description',
-        'value',
+        'amount',
         'previous_balance',
         'current_balance',
         'model_id',

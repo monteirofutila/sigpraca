@@ -14,7 +14,8 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->decimal('debit', 10, 2);
+            $table->enum('payment_period', ['day', 'week', 'month', 'quarter', 'year']);
+            $table->decimal('debit_amount', 10, 2);
             $table->timestamps();
             $table->softDeletes();
         });

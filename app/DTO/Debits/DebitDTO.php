@@ -10,7 +10,7 @@ class DebitDTO
     public function __construct(
         public ?string $account_id,
         public ?string $description,
-        public float $value,
+        public float $amount,
     ) {
     }
 
@@ -21,12 +21,4 @@ class DebitDTO
         return array_combine($keys, $properties);
     }
 
-    public static function makeFromRequest(StoreDebitRequest $request): self
-    {
-        return new self(
-            $request->account_id,
-            $request->description,
-            $request->value,
-        );
-    }
 }

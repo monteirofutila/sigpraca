@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TransactionCreditDebitRequest;
+use App\Http\Requests\TransactionCreditRequest;
+use App\Http\Requests\TransactionDebitRequest;
 use App\Http\Resources\TransactionResource;
 use App\Services\AuthService;
 use App\Services\CreditService;
@@ -27,6 +28,12 @@ class TransactionController extends Controller
         );
     }
 
+    public function show(string $workerID)
+    {
+        $response = $this->transactionService->findById($workerID);
+        return new TransactionResource($response);
+    }
+
     public function getByWorker(string $workerID)
     {
         //
@@ -35,7 +42,14 @@ class TransactionController extends Controller
         );
     }
 
-    public function credit(TransactionCreditDebitRequest $request, string $workerID)
+    public function getTransactionsByPeriod($startDate, $lastDate): ?object
+    {
+        return TransactionResource::collection(
+            $this->transactionService->getTransactionsByPeriod($startDate, $lastDate)
+        );
+    }
+
+    public function creditbalance(TransactionCreditRequest $request, string $workerID)
     {
         //
         if (!$this->authService->passwordConfirmation($request->password)) {
@@ -44,11 +58,11 @@ class TransactionController extends Controller
             ], 400);
         }
 
-        $transaction = $this->creditService->add($workerID, $request->value);
+        $transaction = $this->creditService->add($workerID, $request->amount);
         return new TransactionResource($transaction);
     }
 
-    public function debit(TransactionCreditDebitRequest $request, string $workerID)
+    public function debitBalance(TransactionDebitRequest $request, string $workerID)
     {
         //
         if (!$this->authService->passwordConfirmation($request->password)) {

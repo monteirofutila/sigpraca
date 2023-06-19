@@ -17,14 +17,26 @@ class TransactionService
     public function getAll(): Collection
     {
         throw_if(!auth()->user()->can('transactions-read'), new ForbiddenException);
-
         return $this->repository->getAll();
+    }
+    public function findById(string $id): ?object
+    {
+        throw_if(!auth()->user()->can('transactions-read'), new ForbiddenException);
+
+        $data = $this->repository->findById($id);
+        throw_if(!$data, new ResourceNotFoundException());
+        return $data;
+    }
+
+    public function getTransactionsByPeriod($startDate, $lastDate): ?object
+    {
+        throw_if(!auth()->user()->can('transactions-read'), new ForbiddenException);
+        return $this->repository->getTransactionsByPeriod($startDate, $lastDate);
     }
 
     public function getByWorker(string $workerID): Collection
     {
         throw_if(!auth()->user()->can('transactions-read'), new ForbiddenException);
-        
         return $this->repository->getByWorker($workerID);
     }
 

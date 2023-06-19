@@ -39,11 +39,11 @@ class CreditService
             $creditDTO = new CreditDTO(
                 account_id: $account->id,
                 description: $description,
-                value: $creditValue
+                amount: $creditValue
             );
 
             $credit = $this->creditRepository->new($creditDTO->toArray());
-            $account = $this->accountRepository->incrementBalance($account->id, $credit->value);
+            $account = $this->accountRepository->incrementBalance($account->id, $credit->amount);
 
             $current_balance = $account->balance;
             $userID = auth()->user()->id;
@@ -53,7 +53,7 @@ class CreditService
                 user_id: $userID,
                 account_id: $account->id,
                 description: $description,
-                value: $creditDTO->value,
+                amount: $creditDTO->amount,
                 previous_balance: $previous_balance,
                 current_balance: $current_balance,
                 model_id: $credit->id,
@@ -69,5 +69,11 @@ class CreditService
             DB::rollBack();
             throw new ServerException;
         }
+    }
+
+    public function getTotalCreditAmountByPeriod($startDate, $lastDate): float
+    {
+        throw_if(!auth()->user()->can('transactions-read'), new ForbiddenException);
+        return $this->creditRepository->getTotalCreditAmountByPeriod($startDate, $lastDate);
     }
 }

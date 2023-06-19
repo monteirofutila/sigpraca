@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-require base_path('routes/v1/auth.php');
-require base_path('routes/v1/users.php');
-require base_path('routes/v1/workers.php');
-require base_path('routes/v1/transactions.php');
-require base_path('routes/v1/markets.php');
 require base_path('routes/v1/accounts.php');
+require base_path('routes/v1/auth.php');
+require base_path('routes/v1/categories.php');
+require base_path('routes/v1/markets.php');
+require base_path('routes/v1/permissions.php');
+require base_path('routes/v1/sales.php');
 require base_path('routes/v1/statist.php');
 require base_path('routes/v1/permissions.php');
 require base_path('routes/v1/Messaging.php');

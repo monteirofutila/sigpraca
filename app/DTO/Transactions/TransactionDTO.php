@@ -9,7 +9,7 @@ class TransactionDTO
         public string $user_id,
         public string $account_id,
         public ?string $description,
-        public float $value,
+        public float $amount,
         public float $previous_balance,
         public float $current_balance,
         public string $model_id,

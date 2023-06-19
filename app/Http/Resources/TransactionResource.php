@@ -18,7 +18,7 @@ class TransactionResource extends JsonResource
             'id' => $this->id,
             'code_number' => $this->code_number,
             'description' => $this->description,
-            'value' => $this->value,
+            'amount' => $this->amount,
             'previous_balance' => $this->previous_balance,
             'current_balance' => $this->current_balance,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),

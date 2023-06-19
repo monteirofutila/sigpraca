@@ -16,7 +16,7 @@ return new class extends Migration {
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->text('description')->nullable();
-            $table->decimal('value', 10, 2);
+            $table->decimal('amount', 10, 2);
             $table->timestamps();
             $table->softDeletes();
         });
