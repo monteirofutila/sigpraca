@@ -4,9 +4,7 @@ namespace App\Services;
 
 use App\DTO\Auth\LoginDTO;
 use App\Repositories\UserRepository;
-use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService

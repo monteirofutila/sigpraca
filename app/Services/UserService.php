@@ -26,13 +26,11 @@ class UserService
         $data = $this->repository->findById($id);
         throw_if(!$data, new ResourceNotFoundException);
         return $data;
-
     }
 
     public function getAll(): Collection
     {
         throw_if(!auth()->user()->can('users-read'), new ForbiddenException);
-
         return $this->repository->getAll();
     }
 
@@ -95,6 +93,8 @@ class UserService
             DB::commit();
 
             return $data;
+        } catch (ResourceNotFoundException) {
+             throw new ResourceNotFoundException;
         } catch (\Exception) {
             DB::rollBack();
             throw new ServerException;

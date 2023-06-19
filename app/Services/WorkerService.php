@@ -29,13 +29,11 @@ class WorkerService
         $data = $this->repository->findById($id);
         throw_if(!$data, new ResourceNotFoundException);
         return $data;
-
     }
 
     public function getAll(): Collection
     {
         throw_if(!auth()->user()->can('workers-read'), new ForbiddenException);
-
         return $this->repository->getAll();
     }
 
@@ -101,6 +99,8 @@ class WorkerService
             DB::commit();
 
             return $data;
+        } catch (ResourceNotFoundException) {
+             throw new ResourceNotFoundException;
         } catch (\Exception $e) {
             DB::rollBack();
             throw new ServerException;

@@ -34,7 +34,7 @@ class CreditService
             throw_if(!$account, new ResourceNotFoundException);
 
             $previous_balance = $account->balance;
-            $description = 'Credit';
+            $description = 'Crédito';
 
             $creditDTO = new CreditDTO(
                 account_id: $account->id,
@@ -65,6 +65,8 @@ class CreditService
             DB::commit();
 
             return $transaction;
+        } catch (ResourceNotFoundException) {
+            throw new ResourceNotFoundException;
         } catch (\Exception) {
             DB::rollBack();
             throw new ServerException;

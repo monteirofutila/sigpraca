@@ -16,7 +16,7 @@ class TransactionRepository extends AbstractRepository implements TransactionRep
 
     public function new(array $data): object
     {
-        return $this->model->create($data)->load('account.worker', 'user');
+        return $this->model->create($data)->load(['account' => ['worker','category'], 'user']);
     }
 
     public function getAll(): Collection

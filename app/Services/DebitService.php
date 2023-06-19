@@ -12,7 +12,6 @@ use App\Helpers\FunctionHelper;
 use App\Repositories\AccountRepository;
 use App\Repositories\DebitRepository;
 use App\Repositories\TransactionRepository;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class DebitService
@@ -40,7 +39,7 @@ class DebitService
             throw_if($existingDebit, new ValidationException);
 
             $previous_balance = $account->balance;
-            $description = 'Debit';
+            $description = 'Débito';
 
             $debitDTO = new DebitDTO(
                 account_id: $account->id,
@@ -74,6 +73,10 @@ class DebitService
             DB::commit();
 
             return $transaction;
+        } catch (ResourceNotFoundException) {
+            throw new ResourceNotFoundException;
+        } catch (ValidationException) {
+            throw new ValidationException;
         } catch (\Exception) {
             DB::rollBack();
             throw new ServerException;

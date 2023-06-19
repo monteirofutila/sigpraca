@@ -33,7 +33,7 @@ class StoreWorkerRequest extends FormRequest
             'address_street' => 'nullable|string',
             'date_birth' => 'nullable|date|date_format:Y-m-d',
             'gender' => 'required|in:M,F',
-            'bi' => 'nullable|string|size:14|unique:workers,bi',
+            'bi' => 'nullable|string|unique:workers,bi',
             'category_id' => 'required|exists:categories,id',
         ];
     }

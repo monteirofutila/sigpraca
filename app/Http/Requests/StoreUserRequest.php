@@ -35,7 +35,7 @@ class StoreUserRequest extends FormRequest
             'address_street' => 'nullable|string',
             'date_birth' => 'nullable|date|date_format:Y-m-d',
             'gender' => 'required|in:M,F',
-            'bi' => 'nullable|string|size:14|unique:users,bi',
+            'bi' => 'nullable|string|unique:users,bi',
             'role' => 'required|string|exists:roles,name'
         ];
     }

@@ -7,7 +7,7 @@ use App\Exceptions\ForbiddenException;
 use App\Exceptions\ResourceNotFoundException;
 use App\Repositories\CategoryRepository;
 use Illuminate\Support\Facades\DB;
-use Predis\Response\ServerException;
+use App\Exceptions\ServerException;
 
 class CategoryService
 {
@@ -67,6 +67,8 @@ class CategoryService
             DB::commit();
 
             return $data;
+        } catch (ResourceNotFoundException $e) {
+            throw new ResourceNotFoundException;
         } catch (\Exception $e) {
             DB::rollBack();
             throw new ServerException;

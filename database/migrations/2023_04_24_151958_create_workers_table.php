@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->string('address_street')->nullable();
             $table->date('date_birth')->nullable();
             $table->enum('gender', ['F', 'M']);
-            $table->char('bi', 14)->unique()->nullable();
+            $table->string('bi')->unique()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

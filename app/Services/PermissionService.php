@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Exceptions\ResourceNotFoundException;
 use App\Repositories\PermissionRepository;
 
 class PermissionService
