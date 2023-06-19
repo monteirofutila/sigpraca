@@ -22,3 +22,4 @@ require base_path('routes/v1/markets.php');
 require base_path('routes/v1/accounts.php');
 require base_path('routes/v1/statist.php');
 require base_path('routes/v1/permissions.php');
+require base_path('routes/v1/Messaging.php');

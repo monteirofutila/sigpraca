@@ -24,7 +24,7 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        $dto = CreateUserDTO::makeFromRequest($request);
+        $dto = CreateUserDTO::makeFromRequest($request->number);
         $response = $this->service->new($dto);
         return new UserResource($response);
     }
