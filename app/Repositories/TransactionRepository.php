@@ -18,30 +18,34 @@ class TransactionRepository extends AbstractRepository implements TransactionRep
     public function findById(string $id): ?object
     {
         $field = Uuid::isValid($id) ? 'id' : 'code_number';
-        return $this->model->with(['account' => ['worker','category'], 'user'])->where($field, $id)->first();
+        return $this->model->with(['account' => ['worker', 'category'], 'user'])->where($field, $id)->first();
     }
 
     public function new(array $data): object
     {
-        return $this->model->create($data)->load(['account' => ['worker','category'], 'user']);
+        return $this->model->create($data)->load(['account' => ['worker', 'category'], 'user']);
     }
 
     public function getAll(): Collection
     {
-        return $this->model->with(['account' => ['worker','category'], 'user'])->get();
+        return $this->model->with(['account' => ['worker', 'category'], 'user'])->get();
     }
 
     public function getTransactionsByPeriod($startDate, $lastDate): ?object
     {
         $startDate = Carbon::parse($startDate)->startOfDay();
         $lastDate = Carbon::parse($lastDate)->endOfDay();
-        return $this->model->with('account.worker', 'user')->whereBetween('created_at', [$startDate, $lastDate])
+        return $this->model->with(['account' => ['worker', 'category'], 'user'])->whereBetween('created_at', [
+            $startDate,
+            $lastDate
+        ])
             ->get();
     }
 
     public function getByWorker(string $workerID): Collection
     {
-        return $this->model->with('account.worker', 'user')->whereHas('account', function ($query) use ($workerID) {
+        return $this->model->with(['account' => ['worker', 'category'], 'user'])
+        ->whereHas('account', function ($query) use ($workerID) {
             $query->whereHas('worker', function ($query2) use ($workerID) {
                 $query2->id = $workerID;
             });
@@ -52,5 +56,4 @@ class TransactionRepository extends AbstractRepository implements TransactionRep
     {
         return $this->model->count();
     }
-
 }
