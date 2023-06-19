@@ -28,7 +28,7 @@ class TransactionRepository extends AbstractRepository implements TransactionRep
 
     public function getAll(): Collection
     {
-        return $this->model->with('account.worker', 'user')->get();
+        return $this->model->with(['account' => ['worker','category'], 'user'])->get();
     }
 
     public function getTransactionsByPeriod($startDate, $lastDate): ?object
