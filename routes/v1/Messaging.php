@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\TwilioController;
+use App\Http\Controllers\MessagingController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::post('send-message', [TwilioController::class, 'sendMessage']);
+Route::post('send-message', [MessagingController::class, 'sendMessage']);
 

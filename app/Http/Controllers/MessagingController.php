@@ -8,7 +8,7 @@ use App\Http\Resources\MessagingResource;
 use App\Http\Requests\StoreMessagingRequest;
 use App\DTO\Messaging\CreateMessagingDTO;
 
-class TwilioController extends Controller
+class MessagingController extends Controller
 {
     public function __construct(
         protected MessagingService $service
@@ -17,7 +17,7 @@ class TwilioController extends Controller
     public function sendMessage(StoreMessagingRequest $request)
     {
         //$dto = CreateMessagingDTO::makeFromRequest($request);
-        $response = $this->service->sendMessage($request->number);
+        $response = $this->service->sendMessage($request->number,$request->body);
         return $response;
 
     }
