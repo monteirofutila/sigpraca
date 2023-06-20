@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -21,10 +22,20 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userID = $this->route('userID');
+
         return [
             'name' => 'required|string',
-            'user_name' => 'required|string|unique:users,user_name',
-            'email' => 'nullable|email|unique:users,email',
+            'user_name' => [
+                'required',
+                'string',
+                Rule::unique('users')->ignore($userID),
+            ],
+            'email' => [
+                'nullable',
+                'email',
+                Rule::unique('users')->ignore($userID),
+            ],
             'password' => 'nullable|min:8|confirmed',
             'photo' => 'nullable|image|max:2048|mimes:png,jpg',
             'phone_mobile' => 'nullable|string',
@@ -35,7 +46,11 @@ class UpdateUserRequest extends FormRequest
             'address_street' => 'nullable|string',
             'date_birth' => 'nullable|date|date_format:Y-m-d',
             'gender' => 'required|in:M,F',
-            'bi' => 'nullable|string|size:14|unique:users,bi',
+            'bi' => [
+                'nullable',
+                'string',
+                Rule::unique('users')->ignore($userID),
+            ],
         ];
     }
 }

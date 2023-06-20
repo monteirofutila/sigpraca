@@ -35,10 +35,10 @@ class UserController extends Controller
         return new UserResource($response);
     }
 
-    public function update(string $id, UpdateUserRequest $request)
+    public function update(string $userID, UpdateUserRequest $request)
     {
         $dto = UpdateUserDTO::makeFromRequest($request);
-        $response = $this->service->update($dto, $id);
+        $response = $this->service->update($dto, $userID);
         return new UserResource($response);
     }
 
