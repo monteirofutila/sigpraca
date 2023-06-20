@@ -10,7 +10,7 @@ use App\Repositories\WorkerRepository;
 class AccountService
 {
     public function __construct(
-        protected AccountRepository $repository, 
+        protected AccountRepository $repository,
         protected WorkerRepository $workerRepository,
     ) {
     }
@@ -18,8 +18,11 @@ class AccountService
     public function findByWorker(string $workerID): ?object
     {
         $worker = $this->workerRepository->findById($workerID);
+        throw_if(!$worker, new ResourceNotFoundException);
+
         $data = $this->repository->findByWorker($worker->id);
         throw_if(!$data, new ResourceNotFoundException);
+
         return $data;
     }
 

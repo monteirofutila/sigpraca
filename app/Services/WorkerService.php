@@ -76,7 +76,7 @@ class WorkerService
 
     }
 
-    public function update(UpdateWorkerDTO $dto, string $id): ?object
+    public function update(UpdateWorkerDTO $dto, string $categoryID, string $id): ?object
     {
         throw_if(!auth()->user()->can('workers-update'), new ForbiddenException);
 
@@ -84,6 +84,9 @@ class WorkerService
         try {
 
             $worker = $this->repository->findById($id);
+            throw_if(!$worker, new ResourceNotFoundException);
+
+            $account = $this->accountRepository->findByWorker($worker->id);
 
             if ($dto->photo) {
                 $image_path = FunctionHelper::uploadPhoto($dto->photo, 'workers');
@@ -94,13 +97,19 @@ class WorkerService
             }
 
             $data = $this->repository->update($worker->id, $dto->toArray());
-            throw_if(!$data, new ResourceNotFoundException);
+
+            //editar a categoria da conta do feirante
+            $accountDATA = [
+                'category_id' => $categoryID,
+            ];
+
+            $this->accountRepository->update($account->id, $accountDATA);
 
             DB::commit();
 
             return $data;
         } catch (ResourceNotFoundException) {
-             throw new ResourceNotFoundException;
+            throw new ResourceNotFoundException;
         } catch (\Exception $e) {
             DB::rollBack();
             throw new ServerException;
@@ -114,7 +123,7 @@ class WorkerService
 
         $worker = $this->repository->findById($id);
         throw_if(!$worker, new ResourceNotFoundException);
-        
+
         return $this->repository->delete($worker->id);
     }
 }

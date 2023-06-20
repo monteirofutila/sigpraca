@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\Accounts\AccountDTO;
 use App\DTO\Workers\CreateWorkerDTO;
 use App\DTO\Workers\UpdateWorkerDTO;
 use App\Http\Requests\StoreWorkerRequest;
@@ -42,7 +41,7 @@ class WorkerController extends Controller
     public function update(string $workerID, UpdateWorkerRequest $request)
     {
         $dto = UpdateWorkerDTO::makeFromRequest($request);
-        $response = $this->workerService->update($dto, $workerID);
+        $response = $this->workerService->update($dto, $request->category_id, $workerID);
         return new WorkerResource($response);
     }
 
