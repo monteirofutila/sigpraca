@@ -25,7 +25,7 @@ class UserService
 
         $data = $this->repository->findById($id);
         throw_if(!$data, new ResourceNotFoundException);
-        
+
         return $data;
     }
 
@@ -86,6 +86,8 @@ class UserService
                 if ($user->photo) {
                     FunctionHelper::deletePhoto($user->photo);
                 }
+            } else {
+                $dto->photo = $user->photo;
             }
 
             $data = $this->repository->update($user->id, $dto->toArray());
@@ -95,7 +97,7 @@ class UserService
 
             return $data;
         } catch (ResourceNotFoundException) {
-             throw new ResourceNotFoundException;
+            throw new ResourceNotFoundException;
         } catch (\Exception) {
             DB::rollBack();
             throw new ServerException;

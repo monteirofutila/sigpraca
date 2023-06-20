@@ -37,6 +37,8 @@ class MarketService
                 if ($market->photo) {
                     FunctionHelper::deletePhoto($market->photo);
                 }
+            } else {
+                $dto->photo = $market->photo;
             }
 
             $market = $this->repository->update(

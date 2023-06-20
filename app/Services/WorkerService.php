@@ -94,6 +94,8 @@ class WorkerService
                 if ($worker->photo) {
                     FunctionHelper::deletePhoto($worker->photo);
                 }
+            } else {
+                $dto->photo = $worker->photo;
             }
 
             $data = $this->repository->update($worker->id, $dto->toArray());
