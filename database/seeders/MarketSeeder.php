@@ -20,9 +20,9 @@ class MarketSeeder extends Seeder
     {
         $dados = [
             [
-                "name" => "SISTEMA DE GERENCIAMENTO DE MERCADOS - SIGM",
-                "address" => "SISTEMA DE GERENCIAMENTO DE MERCADOS",
-                "description" => "SISTEMA DE GERENCIAMENTO DE MERCADOS",
+                "name" => "SISTEMA DE GERENCIAMENTO DE MERCADO - SIGM",
+                "address" => "SISTEMA DE GERENCIAMENTO DE MERCADO",
+                "description" => "SISTEMA DE GERENCIAMENTO DE MERCADO",
             ],
         ];
 
