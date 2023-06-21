@@ -10,7 +10,7 @@ class UpdateUserDTO
         public string $name,
         public string $user_name,
         public ?string $email,
-        public ?string $password,
+        public string $password,
         public $photo,
         public ?string $phone_mobile,
         public ?string $phone_other,

@@ -51,6 +51,7 @@ class UpdateUserRequest extends FormRequest
                 'string',
                 Rule::unique('users')->ignore($userID),
             ],
+            'role' => 'required|string|exists:roles,name'
         ];
     }
 }

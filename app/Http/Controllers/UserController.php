@@ -42,9 +42,9 @@ class UserController extends Controller
         return new UserResource($response);
     }
 
-    public function destroy(string $id)
+    public function destroy(string $userID)
     {
-        $this->service->delete($id);
+        $this->service->delete($userID);
         return response()->json([
             'message' => 'Usuário eliminado com sucesso...'
         ], 200);

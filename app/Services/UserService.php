@@ -90,12 +90,14 @@ class UserService
                 $dto->photo = $user->photo;
             }
 
-            $data = $this->repository->update($user->id, $dto->toArray());
-            throw_if(!$data, new ResourceNotFoundException);
+            $user = $this->repository->update($user->id, $dto->toArray());
+            throw_if(!$user, new ResourceNotFoundException);
+
+            $user->syncRoles($dto->role);
 
             DB::commit();
 
-            return $data;
+            return $user;
         } catch (ResourceNotFoundException) {
             throw new ResourceNotFoundException;
         } catch (\Exception) {
