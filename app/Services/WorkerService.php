@@ -49,7 +49,7 @@ class WorkerService
                 $dto->photo = $image_path;
             }
 
-            $prefix = ucfirst(substr($dto->name, 0, 1));
+            $prefix = strtoupper(substr($dto->name, 0, 1));
 
             $data = $dto->toArray();
             $data['code_number'] = FunctionHelper::generateCodeNumber($prefix);

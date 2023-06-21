@@ -49,7 +49,7 @@ class UserService
                 $dto->photo = $image_path;
             }
 
-            $prefix = ucfirst(substr($dto->role, 0, 2));
+            $prefix = strtoupper(substr($dto->role, 0, 2));
 
             $data = $dto->toArray();
             $data['code_number'] = FunctionHelper::generateCodeNumber($prefix);
