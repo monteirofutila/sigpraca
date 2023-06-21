@@ -74,11 +74,13 @@ class UserService
 
         try {
 
+            $user = $this->repository->findById($id);
+
             if ($dto->password) {
                 $dto->password = bcrypt($dto->password);
+            } else {
+                $dto->password = $user->password;
             }
-
-            $user = $this->repository->findById($id);
 
             if ($dto->photo) {
                 $image_path = FunctionHelper::uploadPhoto($dto->photo, 'users');
@@ -91,8 +93,8 @@ class UserService
             }
 
             $user = $this->repository->update($user->id, $dto->toArray());
-            throw_if(!$user, new ResourceNotFoundException);
 
+            throw_if(!$user, new ResourceNotFoundException);
             $user->syncRoles($dto->role);
 
             DB::commit();
