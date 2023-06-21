@@ -20,8 +20,8 @@ class AuthController extends Controller
         $data = $this->service->login($dto);
 
         return response()->json([
-            'token' => $data['token'],
-            'user' => new UserResource($data['user']),
+            'token' => $data->token,
+            'user' => new UserResource($data->user),
         ], 200);
     }
 
