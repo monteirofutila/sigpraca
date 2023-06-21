@@ -20,9 +20,9 @@ class MarketSeeder extends Seeder
     {
         $dados = [
             [
-                "name" => "KIKOLO",
-                "address" => "Angola, Luanda, Cacuaco",
-                "description" => "Mercado do Kikolo",
+                "name" => "SISTEMA DE GERENCIAMENTO DE MERCADOS - SIGM",
+                "address" => "SISTEMA DE GERENCIAMENTO DE MERCADOS",
+                "description" => "SISTEMA DE GERENCIAMENTO DE MERCADOS",
             ],
         ];
 
