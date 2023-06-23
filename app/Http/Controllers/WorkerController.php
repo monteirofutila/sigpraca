@@ -49,7 +49,7 @@ class WorkerController extends Controller
     {
         $this->workerService->delete($workerID);
         return response()->json([
-            'message' => 'Trabalhador eliminado com sucesso...'
+            'message' => 'O recurso selecionado foi removido com sucesso.'
         ], 200);
     }
 }

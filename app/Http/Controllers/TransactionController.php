@@ -54,7 +54,7 @@ class TransactionController extends Controller
         //
         if (!$this->authService->passwordConfirmation($request->password)) {
             return response()->json([
-                'message' => 'Credentials do not match'
+                'message' => 'Desculpe, a senha fornecida não é válida. Por favor, verifique e tente novamente.'
             ], 400);
         }
 
@@ -67,7 +67,7 @@ class TransactionController extends Controller
         //
         if (!$this->authService->passwordConfirmation($request->password)) {
             return response()->json([
-                'message' => 'Credentials do not match'
+                'message' => 'Desculpe, a senha fornecida não é válida. Por favor, verifique e tente novamente.'
             ], 400);
         }
 

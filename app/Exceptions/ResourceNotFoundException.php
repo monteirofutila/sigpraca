@@ -7,7 +7,7 @@ use Exception;
 class ResourceNotFoundException extends Exception
 {
     //
-    protected $message = 'Resource not found...';
+    protected $message = 'O recurso solicitado não foi encontrado.';
     public function render()
     {
         return response()->json([

@@ -39,7 +39,7 @@ class DebitService
 
             //verifica se ja existe uma operação actual de acordo o periodo de pagamento
             $existingDebit = $this->accountRepository->checkDebitPeriodByAccount($account->id);
-            throw_if($existingDebit, new ValidationException);
+            throw_if($existingDebit, new ValidationException('Um débito com esses detalhes já foi registrado anteriormente.'));
 
             $previous_balance = $account->balance;
             $description = 'Débito';
@@ -51,7 +51,7 @@ class DebitService
             );
 
             //verifica se o saldo é suficiente para debitar
-            throw_if($account->balance < $debitDTO->amount, new ValidationException);
+            throw_if($account->balance < $debitDTO->amount, new ValidationException('O saldo disponível é insuficiente para concluir essa transação.'));
 
             $debit = $this->debitRepository->new($debitDTO->toArray());
             $account = $this->accountRepository->decrementBalance($account->id, $debit->amount);
@@ -78,8 +78,8 @@ class DebitService
             return $transaction;
         } catch (ResourceNotFoundException) {
             throw new ResourceNotFoundException;
-        } catch (ValidationException) {
-            throw new ValidationException;
+        } catch (ValidationException $e) {
+            throw new ValidationException($e->getMessage());
         } catch (\Exception) {
             DB::rollBack();
             throw new ServerException;

@@ -6,7 +6,7 @@ use Exception;
 
 class ForbiddenException extends Exception
 {
-    protected $message = 'Access denied. You do not have permission to access this resource...';
+    protected $message = 'Acesso negado. Você não tem permissão para acessar este recurso.';
     public function render()
     {
         return response()->json([

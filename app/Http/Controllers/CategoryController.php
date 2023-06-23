@@ -43,7 +43,7 @@ class CategoryController extends Controller
     {
         $this->service->delete($workerID);
         return response()->json([
-            'message' => 'Categoria eliminada com sucesso...'
+            'message' => 'O recurso selecionado foi removido com sucesso.'
         ], 200);
     }
 }

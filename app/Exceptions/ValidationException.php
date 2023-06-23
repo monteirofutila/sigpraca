@@ -6,7 +6,7 @@ use Exception;
 
 class ValidationException extends Exception
 {
-    protected $message = 'Validation failed....';
+    protected $message = 'Desculpe, alguns dados não atendem aos critérios de validação.';
     public function render()
     {
         return response()->json([

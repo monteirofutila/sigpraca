@@ -46,7 +46,7 @@ class UserController extends Controller
     {
         $this->service->delete($userID);
         return response()->json([
-            'message' => 'Usuário eliminado com sucesso...'
+            'message' => 'O recurso selecionado foi removido com sucesso.'
         ], 200);
     }
 
