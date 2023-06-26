@@ -16,4 +16,9 @@ class PermissionService
         return $this->repository->getAllRoles();
     }
 
+    public function getAllPermissions(): ?object
+    {
+        return $this->repository->getAllPermissions();
+    }
+
 }

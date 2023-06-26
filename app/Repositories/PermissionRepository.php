@@ -19,4 +19,9 @@ class PermissionRepository implements PermissionRepositoryInterface
         return $this->role->all();
     }
 
+    public function getAllPermissions(): ?object
+    {
+        return $this->permission->all();
+    }
+
 }

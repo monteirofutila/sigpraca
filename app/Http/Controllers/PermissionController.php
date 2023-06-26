@@ -22,6 +22,13 @@ class PermissionController extends Controller
         );
     }
 
+    public function getAllPermissions()
+    {
+        return PermissionResource::collection(
+            $this->permissionService->getAllPermissions()
+        );
+    }
+
     public function getRoles(string $userID)
     {
         return $this->userService->getRoles($userID);
